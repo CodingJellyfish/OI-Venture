@@ -8,7 +8,7 @@ This project is completely written in C++. However, it might not be readable for
 
 ## Development
 
-This project is still work in progress. If you want to have a quick look on what the project will be like, please read file [`script`](/script.md). For those who want to contribute, please follow the rules in [`code style restrictions`](/style.md).
+This project is still work in progress. If you want to have a quick look on what the project will be like, please read file [`script`](/doc/script.md). For those who want to contribute, please follow the rules in [`code style restrictions`](/doc/style.md).
 
 ## Hardware Requirement
 
@@ -20,4 +20,4 @@ The software is released under the GNU General Public License (GPL) which can be
 
 ## Building from source
 
-Building instructions can be found in [`INSTALL.md`](/INSTALL.md)
+Building instructions can be found in [`INSTALL.md`](/doc/install.md)

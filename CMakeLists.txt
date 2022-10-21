@@ -19,32 +19,27 @@ if (NOT raylib_FOUND)
     include(FetchContent)
     FetchContent_Declare(
         raylib
-        GIT_REPOSITORY https://github.com/raysan5/raylib.git
-        GIT_TAG 4.2.0
+        GIT_REPOSITORY https://github.com/CodingJellyfish/raylib.git
+        GIT_TAG master
     )
     FetchContent_MakeAvailable(raylib)
 endif()
 
-# raylib-cpp
-find_package(raylib_cpp QUIET)
-if (NOT raylib_cpp_FOUND)
-    include(FetchContent)
-    FetchContent_Declare(
-        raylib_cpp
-        GIT_REPOSITORY https://github.com/RobLoach/raylib-cpp.git
-        GIT_TAG v4.2.5
-    )
-    FetchContent_MakeAvailable(raylib_cpp)
-endif()
-
 # This is the main part:
-file(GLOB_RECURSE HEADERS RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "src/*.hpp")
-file(GLOB_RECURSE SOURCES RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "src/*.cpp")
 
-add_executable(oiventure ${SOURCES} ${HEADERS})
+include_directories(src)
 
-set_target_properties(${PROJECT_NAME} PROPERTIES CXX_STANDARD 11)
-target_link_libraries(${PROJECT_NAME} PUBLIC flecs_static raylib raylib_cpp)
+file(GLOB_RECURSE SOURCES RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "src/*.c")
+file(GLOB_RECURSE HEADERS RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "src/*.h")
+
+set(save_src_dir ${CMAKE_CURRENT_BINARY_DIR})
+execute_process(COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/data ${save_src_dir})
+
+add_executable(OI-Venture ${SOURCES} ${HEADERS})
+
+set(CMAKE_C_FLAGS "-O2 --std=c11 -Wall")
+
+target_link_libraries(${PROJECT_NAME} PUBLIC raylib flecs_static)
 
 # Web Configurations
 if (${PLATFORM} STREQUAL "Web")

@@ -1,5 +1,5 @@
-// OI-Venture - An adventure story featuring a couple of Chinese programming geniuses.
-// Copyright (C) 2022  CodingJellyfish
+// An adventure story featuring a couple of Chinese programming geniuses.
+// Copyright (C) 2022 CodingJellyfish
 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -14,27 +14,23 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+#ifndef HEADER_WINDOW_H
+#define HEADER_WINDOW_H
+
 #include <flecs.h>
 
-#include <raylib-cpp.hpp>
- 
-int main()
-{
-    flecs::world world;
+#include <raylib.h>
 
-    raylib::Color textColor = raylib::Color::LightGray();
-    raylib::Window window(800, 450, "raylib [core] example - basic window");
- 
-    SetTargetFPS(60);
+typedef struct {
+    int width;
+    int height;
+    char *title;
+    bool draw_fps;
+    Color background;
+} init_config_t;
 
-    while (!window.ShouldClose()) 
-    {
-        BeginDrawing();
-        {
-            window.ClearBackground(RAYWHITE);
-            textColor.DrawText("Congrats! You created your first window!", 190, 200, 20);
-        }
-        EndDrawing();
-    }
-    return 0;
-}
+extern ECS_COMPONENT_DECLARE(init_config_t);
+
+void WindowModuleImport(ecs_world_t *ecs);
+
+#endif
