@@ -27,7 +27,6 @@
 
     Flecs by SanderMertens
     Raylib by raysan5
-    Raylib-cpp by RobLoach
 
 ## Tools
 

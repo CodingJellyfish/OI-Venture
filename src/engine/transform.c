@@ -31,7 +31,7 @@ static void check_transform(ecs_iter_t *it)
 
 static void calc_transform(ecs_iter_t *it)
 {
-    transform_t *transform_col = ecs_field(it, transform_t, 0);
+    transform_t *transform_col = ecs_field(it, transform_t, 1);
     for (int i = 0; i < it->count; i++) {
         if (transform_col[i].scale.x == 0.0f) {
             transform_col[i].scale.x = 1.0f;
@@ -40,8 +40,8 @@ static void calc_transform(ecs_iter_t *it)
             transform_col[i].scale.y = 1.0f;
         }
     }
-    if (ecs_field_is_set(it, 1)) {
-        transform_t *transform_parent_col = ecs_field(it, transform_t, 1);
+    if (ecs_field_is_set(it, 2)) {
+        transform_t *transform_parent_col = ecs_field(it, transform_t, 2);
         for (int i = 0; i < it->count; i++) {
             transform_col[i]._o = transform_parent_col[i]._t;
             transform_col[i]._o.x += transform_col[i].origin.x;
@@ -75,6 +75,8 @@ static void calc_transform(ecs_iter_t *it)
             transform_col[i]._r = transform_col[i].rotation;
 
             transform_col[i]._s = transform_col[i].scale;
+
+            transform_col[i]._o = transform_col[i].origin;
         }
     }
 }

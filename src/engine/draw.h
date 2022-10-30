@@ -27,7 +27,7 @@
 
 DEF_ARRAY(Vector2)
 
-#define BEZIER_LINE_DIVISIONS 25
+#define DEFAULT_SEGMENTS 30
 
 typedef enum {
     COLOR_PLAIN,
@@ -73,6 +73,10 @@ typedef enum {
     DRAW_RECT_2_TEXFILL,
     DRAW_RECT_2_OUTLINE,
     DRAW_RECT_2_OUTLINE_TEXFILL,
+    DRAW_TRIANGLE,
+    DRAW_TRIANGLE_TEXFILL,
+    DRAW_TRIANGLE_OUTLINE,
+    DRAW_TRIANGLE_OUTLINE_TEXFILL,
 } draw_type_shape_t;
 
 typedef struct {
@@ -99,7 +103,12 @@ typedef struct {
         struct {
             Vector2 start;
             Vector2 end;
-        } vec;
+        } linear;
+        struct {
+            Vector2 center;
+            float inner;
+            float outer;
+        } radial;
     };
 } draw_color_t;
 
@@ -138,13 +147,6 @@ typedef struct {
             bool sweep;
             bool largearc;
         } ellipse;
-        struct {
-            Vector2 start;
-            Vector2 end;
-            float radius;
-            bool sweep;
-            bool largearc;
-        } circle;
         struct {
             Rectangle rect;
             Rectangle rect2;

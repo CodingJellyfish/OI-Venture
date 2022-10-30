@@ -28,7 +28,7 @@ void draw_quad(
 {
     rlSetTexture(tex.id);
     rlBegin(RL_QUADS);
-    if (origin == NULL) {
+    if (!origin) {
         rlColor4ub(color.r, color.g, color.b, color.a);
         rlTexCoord2f(texrec.x / tex.width, texrec.y / tex.height);
         rlVertex2f(a.x, a.y);

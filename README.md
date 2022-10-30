@@ -2,7 +2,7 @@
 
 An adventure story featuring a couple of Chinese programming geniuses.
 
-## For competitional programmers or OIers
+## For competitive programmers or OIers
 
 This project is completely written in C++. However, it might not be readable for you. As a result, I wrote a [`manual`](/doc/code.md) for you.
 
@@ -12,7 +12,7 @@ This project is still work in progress. If you want to have a quick look on what
 
 ## Hardware Requirement
 
-Your computer should support OpenGL 3.3 at least.
+Your computer should support OpenGL 3.3 or OpenGL ES 2.0.
 
 ## License
 

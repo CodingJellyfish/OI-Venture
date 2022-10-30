@@ -16,10 +16,9 @@
 
 #include "engine/draw.h"
 #include "utils/gfx.h"
+#include "utils/tools.h"
 
 #include <math.h>
-
-#include <raymath.h>
 
 IMPL_ARRAY(Vector2)
 
@@ -53,6 +52,56 @@ static void end_draw(ecs_iter_t *it)
     EndDrawing();
 }
 
+static inline Color calc_color(draw_color_t color, Vector2 pos, int ind)
+{
+    switch (color.type) {
+    case COLOR_PLAIN:
+        return color.color;
+    case COLOR_FADE:
+        switch (ind) {
+            case 0:
+                return color.color;
+            case 1:
+                return color.color2;
+            case 2:
+                return color.color3;
+            case 3:
+                return color.color4;
+            default:
+                return color.color;
+        }
+    case COLOR_FADE_LINEAR:
+    {
+        float t = ((pos.x - color.linear.start.x) * (color.linear.end.x - color.linear.start.x)
+                 + (pos.y - color.linear.start.y) * (color.linear.end.y - color.linear.start.y))
+                / ((color.linear.end.x - color.linear.start.x) * (color.linear.end.x - color.linear.start.x)
+                 + (color.linear.end.y - color.linear.start.y) * (color.linear.end.y - color.linear.start.y));
+        t = t > 0.0f ? t < 1.0f ? t : 1.0f : 0.0f;
+        return (Color) {
+            .r = t * color.color2.r + (1.0f - t) * color.color.r,
+            .g = t * color.color2.g + (1.0f - t) * color.color.g,
+            .b = t * color.color2.b + (1.0f - t) * color.color.b,
+            .a = t * color.color2.a + (1.0f - t) * color.color.a
+        };
+    }
+    break;
+    case COLOR_FADE_RADIAL:
+    {
+        float dis = sqrtf((pos.x - color.radial.center.x) * (pos.x - color.radial.center.x)
+                        + (pos.y - color.radial.center.y) * (pos.y - color.radial.center.y));
+        float t = (dis - color.radial.inner) / (color.radial.outer - color.radial.inner);
+        t = t > 0.0f ? t < 1.0f ? t : 1.0f : 0.0f;
+        return (Color) {
+            .r = t * color.color2.r + (1.0f - t) * color.color.r,
+            .g = t * color.color2.g + (1.0f - t) * color.color.g,
+            .b = t * color.color2.b + (1.0f - t) * color.color.b,
+            .a = t * color.color2.a + (1.0f - t) * color.color.a
+        };
+    }
+    break;
+    }
+}
+
 static inline void check_mode(bool has, draw_mode_t *col, int ind)
 {
     if (has) {
@@ -82,6 +131,7 @@ static inline void check_transform(bool has, transform_t *col, int ind)
             rlRotatef(col[ind]._r, col[ind]._o.x, col[ind]._o.y, 0.0f);
         }
         rlScalef(col[ind]._s.x, col[ind]._s.y, 0.0f);
+        rlTranslatef(-col[ind]._o.x, -col[ind]._o.y, 0.0f);
     }
 }
 
@@ -153,18 +203,21 @@ static void draw_text(draw_text_t text, Font font, draw_color_t color)
 
 static void draw_shape(draw_shape_t shape, draw_color_t color, Texture2D tex, Rectangle texrect, Vector2 texorigin)
 {
+    int segments = shape.segments ? shape.segments : DEFAULT_SEGMENTS;
+
     switch (shape.type) {
     case DRAW_BEZIER:
+    case DRAW_BEZIER_TEXFILL:
     {
         Vector2 previous = { 0 }, previous2 = { 0 };
         Vector2 current = { 0 }, current2 = { 0 };
 
-        for (int j = 0; j <= BEZIER_LINE_DIVISIONS; j++)
+        for (int j = 0; j <= segments; j++)
         {
-            float t = 1.0f / BEZIER_LINE_DIVISIONS * j;
-            float fac1 = (1.0f - t) * (1.0f - t);
+            float t = 1.0f / segments * j;
+            float fac1 = powf(1.0f - t, 2.0f);
             float fac2 = 2.0f * (1.0f - t) * t;
-            float fac3 = t * t;
+            float fac3 = powf(t, 2.0f);
 
             float vec1x = fac1 * (shape.vertex.point[0].y - shape.vertex.point[2].y)
                         + fac2 * (shape.vertex.point[2].y - shape.vertex.point[3].y)
@@ -200,7 +253,10 @@ static void draw_shape(draw_shape_t shape, draw_color_t color, Texture2D tex, Re
                 draw_quad(
                     previous2, previous, current, current2,
                     tex, texrect, shape.type & 1 ? NULL : &texorigin, 
-                    color.color, color.color, color.color, color.color
+                    calc_color(color, previous2, 0),
+                    calc_color(color, previous, 1),
+                    calc_color(color, current, 2),
+                    calc_color(color, current2, 3)
                 );
             }
             previous = current;
@@ -208,7 +264,178 @@ static void draw_shape(draw_shape_t shape, draw_color_t color, Texture2D tex, Re
         }
     }
     break;   
+    case DRAW_BEZIER_QUAD:
+    case DRAW_BEZIER_QUAD_TEXFILL:
+    {
+        Vector2 previous = { 0 }, previous2 = { 0 };
+        Vector2 current = { 0 }, current2 = { 0 };
+
+        for (int j = 0; j <= segments; j++)
+        {
+            float t = 1.0f / segments * j;
+            float fac1 = 1.0f - t;
+            float fac2 = t;
+
+            float vec1x = fac1 * (shape.vertex.point[0].y - shape.vertex.point[2].y)
+                        + fac2 * (shape.vertex.point[2].y - shape.vertex.point[1].y);
+            float vec1y = fac1 * (shape.vertex.point[2].x - shape.vertex.point[0].x)
+                        + fac2 * (shape.vertex.point[1].x - shape.vertex.point[2].x);
+            float veclen = sqrtf(vec1x * vec1x + vec1y * vec1y) / shape.thickness * 2.0f;
+            vec1x /= veclen;
+            vec1y /= veclen;
+            
+            float a = powf(1.0f - t, 2.0f);
+            float b = 2.0f * (1.0f - t) * t;
+            float c = powf(t, 2.0f);
+            current.y = a * shape.vertex.point[0].y
+                        + b * shape.vertex.point[2].y
+                        + c * shape.vertex.point[1].y;
+            current.x = a * shape.vertex.point[0].x
+                        + b * shape.vertex.point[2].x
+                        + c * shape.vertex.point[1].x;
+
+            current2 = current;
+            current.x += vec1x;
+            current.y += vec1y;
+            current2.x -= vec1x;
+            current2.y -= vec1y;
+
+            if (j)
+            {              
+                draw_quad(
+                    previous2, previous, current, current2,
+                    tex, texrect, shape.type & 1 ? NULL : &texorigin, 
+                    calc_color(color, previous2, 0),
+                    calc_color(color, previous, 1),
+                    calc_color(color, current, 2),
+                    calc_color(color, current2, 3)
+                );
+            }
+            previous = current;
+            previous2 = current2;
+        }
+    }
+    break; 
+    case DRAW_BEZIER_QUAD_FILL:
+    case DRAW_BEZIER_QUAD_FILL_TEXFILL:
+    {
+        Vector2 from = shape.vertex.point[0], to = shape.vertex.point[1], ctrl = shape.vertex.point[2];
+        if ((ctrl.x - from.x) * (to.y - from.y) - (ctrl.y - from.y) * (to.x - from.x) < 0) {
+            Vector2 tmp = from;
+            from = to;
+            to = tmp;
+        }
+        Vector2 previous = { 0 }, previous2 = { 0 };
+        Vector2 current = { 0 };
+
+        for (int j = 0; j <= segments; j++)
+        {
+            float t = 1.0f / segments * j;
+            
+            float a = powf(1.0f - t, 2.0f);
+            float b = 2.0f * (1.0f - t) * t;
+            float c = powf(t, 2.0f);
+            current.y = a * from.y + b * ctrl.y + c * to.y;
+            current.x = a * from.x + b * ctrl.x + c * to.x;
+
+            if (j && !(j & 1)) {              
+                draw_quad(
+                    previous2, previous, current, ctrl,
+                    tex, texrect, shape.type & 1 ? NULL : &texorigin, 
+                    calc_color(color, previous2, 0),
+                    calc_color(color, previous, 1),
+                    calc_color(color, current, 2),
+                    calc_color(color, shape.vertex.point[0], 3)
+                );
+            } else if (j == segments) {
+                draw_quad(
+                    previous, previous, current, ctrl,
+                    tex, texrect, shape.type & 1 ? NULL : &texorigin, 
+                    calc_color(color, previous, 0),
+                    calc_color(color, previous, 1),
+                    calc_color(color, current, 2),
+                    calc_color(color, shape.vertex.point[0], 3)
+                );
+            }
+            previous2 = previous;
+            previous = current;
+        }
+    }
+    break; 
+    case DRAW_BEZIER_QUAD_FILL_CTRL:
+    case DRAW_BEZIER_QUAD_FILL_CTRL_TEXFILL:
+    {
+        Vector2 from = shape.vertex.point[0], to = shape.vertex.point[1], ctrl = shape.vertex.point[2];
+        if ((ctrl.x - from.x) * (to.y - from.y) - (ctrl.y - from.y) * (to.x - from.x) > 0) {
+            Vector2 tmp = from;
+            from = to;
+            to = tmp;
+        }
+        Vector2 previous = { 0 }, previous2 = { 0 };
+        Vector2 current = { 0 };
+
+        for (int j = 0; j <= segments; j++)
+        {
+            float t = 1.0f / segments * j;
+            
+            float a = powf(1.0f - t, 2.0f);
+            float b = 2.0f * (1.0f - t) * t;
+            float c = powf(t, 2.0f);
+            current.y = a * from.y + b * ctrl.y + c * to.y;
+            current.x = a * from.x + b * ctrl.x + c * to.x;
+
+            if (j && !(j & 1)) {              
+                draw_quad(
+                    previous2, previous, current, ctrl,
+                    tex, texrect, shape.type & 1 ? NULL : &texorigin, 
+                    calc_color(color, previous2, 0),
+                    calc_color(color, previous, 1),
+                    calc_color(color, current, 2),
+                    calc_color(color, ctrl, 3)
+                );
+            } else if (j == segments) {
+                draw_quad(
+                    previous, previous, current, ctrl,
+                    tex, texrect, shape.type & 1 ? NULL : &texorigin, 
+                    calc_color(color, previous, 0),
+                    calc_color(color, previous, 1),
+                    calc_color(color, current, 2),
+                    calc_color(color, ctrl, 3)
+                );
+            }
+            previous2 = previous;
+            previous = current;
+        }
+    }
+    break; 
+    case DRAW_LINE_2:
+    case DRAW_LINE_2_TEXFILL:
+    {
+        float vec1x = shape.vertex.point[2].y - shape.vertex.point[3].y;
+        float vec1y = shape.vertex.point[3].x - shape.vertex.point[2].x;
+        float veclen = sqrtf(vec1x * vec1x + vec1y * vec1y) / shape.thickness * 2.0f;
+        vec1x /= veclen;
+        vec1y /= veclen;
+        Vector2 x1 = shape.vertex.point[2];
+        x1.x -= vec1x, x1.y -= vec1y;
+        Vector2 x2 = shape.vertex.point[2];
+        x2.x += vec1x, x2.y += vec1y;
+        Vector2 x3 = shape.vertex.point[3];
+        x3.x += vec1x, x3.y += vec1y;
+        Vector2 x4 = shape.vertex.point[3];
+        x4.x -= vec1x, x4.y -= vec1y;
+
+        draw_quad(
+            x1, x2, x3, x4,
+            tex, texrect, shape.type & 1 ? NULL : &texorigin, 
+            calc_color(color, x1, 0),
+            calc_color(color, x2, 1),
+            calc_color(color, x3, 2),
+            calc_color(color, x4, 3)
+        );
+    }
     case DRAW_LINE:
+    case DRAW_LINE_TEXFILL:
     {
         float vec1x = shape.vertex.point[0].y - shape.vertex.point[1].y;
         float vec1y = shape.vertex.point[1].x - shape.vertex.point[0].x;
@@ -227,11 +454,15 @@ static void draw_shape(draw_shape_t shape, draw_color_t color, Texture2D tex, Re
         draw_quad(
             x1, x2, x3, x4,
             tex, texrect, shape.type & 1 ? NULL : &texorigin, 
-            color.color, color.color, color.color, color.color
+            calc_color(color, x1, 0),
+            calc_color(color, x2, 1),
+            calc_color(color, x3, 2),
+            calc_color(color, x4, 3)
         );
     }
     break;
     case DRAW_QUAD:
+    case DRAW_QUAD_TEXFILL:
     {
         draw_quad(
             shape.vertex.point[0],
@@ -239,7 +470,45 @@ static void draw_shape(draw_shape_t shape, draw_color_t color, Texture2D tex, Re
             shape.vertex.point[2],
             shape.vertex.point[3],
             tex, texrect, shape.type & 1 ? NULL : &texorigin, 
-            color.color, color.color, color.color, color.color
+            calc_color(color, shape.vertex.point[0], 0),
+            calc_color(color, shape.vertex.point[1], 1),
+            calc_color(color, shape.vertex.point[2], 2),
+            calc_color(color, shape.vertex.point[3], 3)
+        );
+    }
+    break;
+    case DRAW_RECT_2:
+    case DRAW_RECT_2_TEXFILL:
+    {
+        Vector2 x1 = (Vector2) { shape.rect.rect2.x, shape.rect.rect2.y };
+        Vector2 x2 = (Vector2) { shape.rect.rect2.x, shape.rect.rect2.y + shape.rect.rect2.height };
+        Vector2 x3 = (Vector2) { shape.rect.rect2.x + shape.rect.rect2.width, shape.rect.rect2.y + shape.rect.rect2.height };
+        Vector2 x4 = (Vector2) { shape.rect.rect2.x + shape.rect.rect2.width, shape.rect.rect2.y };
+
+        draw_quad(
+            x1, x2, x3, x4,
+            tex, texrect, shape.type & 1 ? NULL : &texorigin, 
+            calc_color(color, x1, 0),
+            calc_color(color, x2, 1),
+            calc_color(color, x3, 2),
+            calc_color(color, x4, 3)
+        );
+    }
+    case DRAW_RECT:
+    case DRAW_RECT_TEXFILL:
+    {
+        Vector2 x1 = (Vector2) { shape.rect.rect.x, shape.rect.rect.y };
+        Vector2 x2 = (Vector2) { shape.rect.rect.x, shape.rect.rect.y + shape.rect.rect.height };
+        Vector2 x3 = (Vector2) { shape.rect.rect.x + shape.rect.rect.width, shape.rect.rect.y + shape.rect.rect.height };
+        Vector2 x4 = (Vector2) { shape.rect.rect.x + shape.rect.rect.width, shape.rect.rect.y };
+
+        draw_quad(
+            x1, x2, x3, x4,
+            tex, texrect, shape.type & 1 ? NULL : &texorigin, 
+            calc_color(color, x1, 0),
+            calc_color(color, x2, 1),
+            calc_color(color, x3, 2),
+            calc_color(color, x4, 3)
         );
     }
     break;
@@ -324,8 +593,8 @@ static void do_draw(ecs_iter_t *it)
                 (draw_shape_t) {
                     .type = DRAW_RECT,
                     .rect.rect = {
-                        .x = texrec.x + texorigin.x,
-                        .y = texrec.y + texorigin.y,
+                        .x = texorigin.x,
+                        .y = texorigin.y,
                         .width = texrec.width,
                         .height = texrec.height
                     }
@@ -562,8 +831,8 @@ void DrawModuleImport(ecs_world_t *ecs)
                     { ecs_id(draw_text_t),           .oper = EcsOptional },
                     { ecs_id(draw_texture_t),        .oper = EcsOptional },     
                     { ecs_id(transform_t),           .oper = EcsOptional },
-                    { Draw },
-                    { ecs_id(draw_priority_t), .inout = EcsIn }
+                    { ecs_id(draw_priority_t), .inout = EcsIn },
+                    //{ Draw }
                 },
                 .instanced = true
             },
