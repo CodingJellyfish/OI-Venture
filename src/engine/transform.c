@@ -22,14 +22,7 @@ ECS_COMPONENT_DECLARE(transform_t);
 
 ECS_DECLARE(TransformChildOf);
 
-static void check_transform(ecs_iter_t *it)
-{
-    for (int i = 0; i < it->count; i++) {
-        ecs_set(it->real_world, it->entities[i], transform_t, {0});
-    }
-}
-
-static void calc_transform(ecs_iter_t *it)
+static void check_transform_avaliable(ecs_iter_t *it)
 {
     transform_t *transform_col = ecs_field(it, transform_t, 1);
     for (int i = 0; i < it->count; i++) {
@@ -40,6 +33,12 @@ static void calc_transform(ecs_iter_t *it)
             transform_col[i].scale.y = 1.0f;
         }
     }
+}
+
+static void calc_transform(ecs_iter_t *it)
+{
+    transform_t *transform_col = ecs_field(it, transform_t, 1);
+
     if (ecs_field_is_set(it, 2)) {
         transform_t *transform_parent_col = ecs_field(it, transform_t, 2);
         for (int i = 0; i < it->count; i++) {
@@ -114,7 +113,7 @@ Vector2 do_transform(Vector2 point, transform_t *tran)
     ret = do_scale(point, tran->_o, tran->_s);
     ret = do_rotation(point, tran->_o, tran->_r);
     ret = do_translation(point, tran->_t);
-    return point;
+    return ret;
 }
 
 void TransformModuleImport(ecs_world_t *ecs)
@@ -127,17 +126,11 @@ void TransformModuleImport(ecs_world_t *ecs)
 
     ecs_add_id(ecs, TransformChildOf, EcsAcyclic);
 
-    ecs_system_init(ecs, &(ecs_system_desc_t) {
-        .entity = ecs_entity(ecs, {
-            .add = { ecs_dependson(EcsPreUpdate) }
-        }),
-        .query.filter.terms = {
-            { ecs_id(transform_t), .oper = EcsNot },
-            { ecs_id(transform_t), .src = { .flags = EcsSelf | EcsUp, .trav = TransformChildOf } }
-        },
-        .callback = check_transform,
-        .no_staging = true
-    });
+    /*ecs_observer_init(ecs, &(ecs_observer_desc_t) {
+        .filter.terms = { { ecs_id(transform_t) } },
+        .events = { EcsOnSet },
+        .callback = check_transform_avaliable
+    });*/
     ecs_system_init(ecs, &(ecs_system_desc_t) {
         .entity = ecs_entity(ecs, {
             .add = { ecs_dependson(EcsPreUpdate) }

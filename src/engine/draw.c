@@ -126,6 +126,7 @@ static inline void check_mode(bool has, draw_mode_t *col, int ind)
 static inline void check_transform(bool has, transform_t *col, int ind)
 {
     if (has) {
+        rlLoadIdentity();
         rlTranslatef(col[ind]._t.x, col[ind]._t.y, 0.0f);
         if (col[ind]._r) {
             rlRotatef(col[ind]._r, col[ind]._o.x, col[ind]._o.y, 0.0f);
@@ -559,7 +560,6 @@ static void do_draw(ecs_iter_t *it)
     check_sprite(has_single & has_sprite_col, &texrec, &texorigin, sprite_col, 0);
 
     for (int i = 0; i < it->count; i++) {
-
         check_transform(has_arr & has_transform_col, transform_col, i);
         check_custom_pre(has_arr & has_custom_col, custom_col, i);
         check_mode(has_arr & has_mode_col, mode_col, i);
@@ -668,16 +668,16 @@ static void process_canvas(ecs_iter_t *it)
                 .query = { 
                     .filter = {
                         .terms = {
-                            { ecs_id(draw_canvas_t),         .oper = EcsOptional },
-                            { ecs_id(draw_color_t),          .oper = EcsOptional },
-                            { ecs_id(draw_custom_t),         .oper = EcsOptional },
-                            { ecs_id(draw_font_t),           .oper = EcsOptional },
-                            { ecs_id(draw_mode_t),           .oper = EcsOptional },
-                            { ecs_id(draw_shape_t),          .oper = EcsOptional },
-                            { ecs_id(draw_sprite_t),         .oper = EcsOptional },
-                            { ecs_id(draw_text_t),           .oper = EcsOptional },
-                            { ecs_id(draw_texture_t),        .oper = EcsOptional },     
-                            { ecs_id(transform_t),           .oper = EcsOptional },
+                            { ecs_id(draw_canvas_t),         .oper = EcsOptional, .inout = EcsIn },
+                            { ecs_id(draw_color_t),          .oper = EcsOptional, .inout = EcsIn },
+                            { ecs_id(draw_custom_t),         .oper = EcsOptional, .inout = EcsIn },
+                            { ecs_id(draw_font_t),           .oper = EcsOptional, .inout = EcsIn },
+                            { ecs_id(draw_mode_t),           .oper = EcsOptional, .inout = EcsIn },
+                            { ecs_id(draw_shape_t),          .oper = EcsOptional, .inout = EcsIn },
+                            { ecs_id(draw_sprite_t),         .oper = EcsOptional, .inout = EcsIn },
+                            { ecs_id(draw_text_t),           .oper = EcsOptional, .inout = EcsIn },
+                            { ecs_id(draw_texture_t),        .oper = EcsOptional, .inout = EcsIn },     
+                            { ecs_id(transform_t),           .oper = EcsOptional, .inout = EcsIn },
                             { ecs_pair(Draw, it->entities[i]) },
                             { ecs_id(draw_priority_t), .inout = EcsIn }
                         },
@@ -821,18 +821,18 @@ void DrawModuleImport(ecs_world_t *ecs)
         .query = { 
             .filter = {
                 .terms = {
-                    { ecs_id(draw_canvas_t),         .oper = EcsOptional },
-                    { ecs_id(draw_color_t),          .oper = EcsOptional },
-                    { ecs_id(draw_custom_t),         .oper = EcsOptional },
-                    { ecs_id(draw_font_t),           .oper = EcsOptional },
-                    { ecs_id(draw_mode_t),           .oper = EcsOptional },
-                    { ecs_id(draw_shape_t),          .oper = EcsOptional },
-                    { ecs_id(draw_sprite_t),         .oper = EcsOptional },
-                    { ecs_id(draw_text_t),           .oper = EcsOptional },
-                    { ecs_id(draw_texture_t),        .oper = EcsOptional },     
-                    { ecs_id(transform_t),           .oper = EcsOptional },
-                    { ecs_id(draw_priority_t), .inout = EcsIn },
-                    //{ Draw }
+                    { ecs_id(draw_canvas_t),         .oper = EcsOptional, .inout = EcsIn },
+                    { ecs_id(draw_color_t),          .oper = EcsOptional, .inout = EcsIn },
+                    { ecs_id(draw_custom_t),         .oper = EcsOptional, .inout = EcsIn },
+                    { ecs_id(draw_font_t),           .oper = EcsOptional, .inout = EcsIn },
+                    { ecs_id(draw_mode_t),           .oper = EcsOptional, .inout = EcsIn },
+                    { ecs_id(draw_shape_t),          .oper = EcsOptional, .inout = EcsIn },
+                    { ecs_id(draw_sprite_t),         .oper = EcsOptional, .inout = EcsIn },
+                    { ecs_id(draw_text_t),           .oper = EcsOptional, .inout = EcsIn },
+                    { ecs_id(draw_texture_t),        .oper = EcsOptional, .inout = EcsIn },     
+                    { ecs_id(transform_t),           .oper = EcsOptional, .inout = EcsIn },
+                    { Draw },
+                    { ecs_id(draw_priority_t), .inout = EcsIn }
                 },
                 .instanced = true
             },

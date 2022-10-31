@@ -94,7 +94,7 @@ int main(int argc, char *argv[])
     });
     ecs_set(ecs, jay, map_location_t, { .x = 50, .y = 50 });
 
-    int row = 30, col = 30;
+    int row = 100, col = 100;
 
     for (int i = 0; i <= row + 1; i++) {
         for (int j = 0; j <= col + 1; j++) {
@@ -104,7 +104,7 @@ int main(int argc, char *argv[])
     for (int i = 0; i <= row; i++) {
         for (int j = 0; j <= col; j++) {
             map_draw[i][j] = ecs_new_w_id(ecs, Draw);
-            ecs_set(ecs, map_draw[i][j], transform_t, { .translation = { len * j, len * i } });
+            ecs_set(ecs, map_draw[i][j], transform_t, { .translation = { len * j, len * i }, .scale = { 1.0f, 1.0f } });
             ecs_set(ecs, map_draw[i][j], map_location_t, { .x = j, .y = i });
 
             ecs_entity_t back = ecs_new_w_pair(ecs, EcsIsA, map_draw[i][j]);
@@ -128,7 +128,7 @@ int main(int argc, char *argv[])
                 ecs_entity_t ent = ecs_new_w_pair(ecs, EcsIsA, fore);
                 ecs_set(ecs, ent, draw_shape_t, {
                     .type = DRAW_LINE_2,
-                    .thickness = 2.0f,
+                    .thickness = 1.0f,
                     .vertex = { {
                         { len, padding },
                         { len, len - padding },
@@ -140,7 +140,7 @@ int main(int argc, char *argv[])
                 ecs_entity_t ent = ecs_new_w_pair(ecs, EcsIsA, fore);
                 ecs_set(ecs, ent, draw_shape_t, {
                     .type = DRAW_LINE,
-                    .thickness = 2.0f,
+                    .thickness = 1.0f,
                     .vertex = { {
                         { len, padding },
                         { len, len - padding }
@@ -150,7 +150,7 @@ int main(int argc, char *argv[])
                 ecs_entity_t ent = ecs_new_w_pair(ecs, EcsIsA, fore);
                 ecs_set(ecs, ent, draw_shape_t, {
                     .type = DRAW_LINE,
-                    .thickness = 2.0f,
+                    .thickness = 1.0f,
                     .vertex = { {
                         { padding, len },
                         { len - padding, len }
@@ -165,7 +165,8 @@ int main(int argc, char *argv[])
                     ecs_entity_t ent = ecs_new_w_pair(ecs, EcsIsA, fore);
                     ecs_set(ecs, ent, draw_shape_t, {
                         .type = DRAW_LINE_2,
-                        .thickness = 2.0f,
+                        .thickness = 1.0f,
+                        .segments = 4,
                         .vertex = { {
                             { len, len - padding },
                             { len, len + padding },
@@ -177,7 +178,8 @@ int main(int argc, char *argv[])
                     ecs_entity_t ent = ecs_new_w_pair(ecs, EcsIsA, fore);
                     ecs_set(ecs, ent, draw_shape_t, {
                         .type = DRAW_LINE,
-                        .thickness = 2.0f,
+                        .thickness = 1.0f,
+                        .segments = 4,
                         .vertex = { {
                             { len - padding, len },
                             { len + padding, len }
@@ -187,7 +189,8 @@ int main(int argc, char *argv[])
                     ecs_entity_t ent = ecs_new_w_pair(ecs, EcsIsA, fore);
                     ecs_set(ecs, ent, draw_shape_t, {
                         .type = DRAW_LINE,
-                        .thickness = 2.0f,
+                        .thickness = 1.0f,
+                        .segments = 4,
                         .vertex = { {
                             { len, len - padding },
                             { len, len + padding }
@@ -198,7 +201,8 @@ int main(int argc, char *argv[])
                         ecs_entity_t ent = ecs_new_w_pair(ecs, EcsIsA, fore);
                         ecs_set(ecs, ent, draw_shape_t, {
                             .type = DRAW_BEZIER_QUAD,
-                            .thickness = 2.0f,
+                            .thickness = 1.0f,
+                            .segments = 4,
                             .vertex = { {
                                 { len, len - padding },
                                 { len - padding, len },
@@ -210,7 +214,8 @@ int main(int argc, char *argv[])
                         ecs_entity_t ent = ecs_new_w_pair(ecs, EcsIsA, fore);
                         ecs_set(ecs, ent, draw_shape_t, {
                             .type = DRAW_BEZIER_QUAD,
-                            .thickness = 2.0f,
+                            .thickness = 1.0f,
+                            .segments = 4,
                             .vertex = { {
                                 { len, len + padding },
                                 { len - padding, len },
@@ -222,7 +227,8 @@ int main(int argc, char *argv[])
                         ecs_entity_t ent = ecs_new_w_pair(ecs, EcsIsA, fore);
                         ecs_set(ecs, ent, draw_shape_t, {
                             .type = DRAW_BEZIER_QUAD,
-                            .thickness = 2.0f,
+                            .thickness = 1.0f,
+                            .segments = 4,
                             .vertex = { {
                                 { len, len + padding },
                                 { len + padding, len },
@@ -234,7 +240,8 @@ int main(int argc, char *argv[])
                         ecs_entity_t ent = ecs_new_w_pair(ecs, EcsIsA, fore);
                         ecs_set(ecs, ent, draw_shape_t, {
                             .type = DRAW_BEZIER_QUAD,
-                            .thickness = 2.0f,
+                            .thickness = 1.0f,
+                            .segments = 4,
                             .vertex = { {
                                 { len, len - padding },
                                 { len + padding, len },
