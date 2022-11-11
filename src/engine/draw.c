@@ -20,8 +20,6 @@
 
 #include <math.h>
 
-IMPL_ARRAY(Vector2)
-
 ECS_COMPONENT_DECLARE(draw_canvas_t);
 ECS_COMPONENT_DECLARE(draw_color_t);
 ECS_COMPONENT_DECLARE(draw_custom_t);
@@ -123,7 +121,7 @@ static inline void check_mode(bool has, draw_mode_t *col, int ind)
     }
 }
 
-static inline void check_transform(bool has, transform_t *col, int ind)
+static inline void check_transform(bool has, transform_t *col, bool *flip, int ind)
 {
     if (has) {
         rlLoadIdentity();
@@ -131,8 +129,11 @@ static inline void check_transform(bool has, transform_t *col, int ind)
         if (col[ind]._r) {
             rlRotatef(col[ind]._r, col[ind]._o.x, col[ind]._o.y, 0.0f);
         }
-        rlScalef(col[ind]._s.x, col[ind]._s.y, 0.0f);
+        *flip = col[ind]._s.x * col[ind]._s.y < 0.0f;
+        rlScalef(col[ind]._s.x, col[ind]._s.y, 1.0f);
         rlTranslatef(-col[ind]._o.x, -col[ind]._o.y, 0.0f);
+    } else {
+        *flip = false;
     }
 }
 
@@ -176,24 +177,17 @@ static inline void check_sprite(bool has, Rectangle *rec, Vector2 *ori, draw_spr
     }
 }
 
-static inline void check_custom_pre(bool has, draw_custom_t *col, int ind)
+static inline void check_custom(bool has, draw_entity_info_t *info, draw_custom_t *col, int ind)
 {
     if (has) {
-        col[ind].pre(col[ind].prearg);
+        col[ind].func(col[ind].arg, info);
     }
 }
 
-static inline void check_custom_post(bool has, draw_custom_t *col, int ind)
-{
-    if (has) {
-        col[ind].post(col[ind].postarg);
-    }
-}
-
-static void draw_text(draw_text_t text, Font font, draw_color_t color)
+static void draw_text(draw_text_t text, draw_font_t font, draw_color_t color)
 {
     DrawTextEx(
-        font,
+        font.font,
         text.str,
         text.origin,
         text.size, 
@@ -202,7 +196,7 @@ static void draw_text(draw_text_t text, Font font, draw_color_t color)
     );
 }
 
-static void draw_shape(draw_shape_t shape, draw_color_t color, Texture2D tex, Rectangle texrect, Vector2 texorigin)
+static void draw_shape(draw_shape_t shape, draw_color_t color, Texture2D tex, Rectangle texrect, Vector2 texorigin, bool flip)
 {
     int segments = shape.segments ? shape.segments : DEFAULT_SEGMENTS;
 
@@ -257,7 +251,8 @@ static void draw_shape(draw_shape_t shape, draw_color_t color, Texture2D tex, Re
                     calc_color(color, previous2, 0),
                     calc_color(color, previous, 1),
                     calc_color(color, current, 2),
-                    calc_color(color, current2, 3)
+                    calc_color(color, current2, 3),
+                    flip
                 );
             }
             previous = current;
@@ -309,7 +304,8 @@ static void draw_shape(draw_shape_t shape, draw_color_t color, Texture2D tex, Re
                     calc_color(color, previous2, 0),
                     calc_color(color, previous, 1),
                     calc_color(color, current, 2),
-                    calc_color(color, current2, 3)
+                    calc_color(color, current2, 3),
+                    flip
                 );
             }
             previous = current;
@@ -319,6 +315,54 @@ static void draw_shape(draw_shape_t shape, draw_color_t color, Texture2D tex, Re
     break; 
     case DRAW_BEZIER_QUAD_FILL:
     case DRAW_BEZIER_QUAD_FILL_TEXFILL:
+    {
+        Vector2 from = shape.vertex.point[0], to = shape.vertex.point[1], ctrl = shape.vertex.point[2];
+        if ((ctrl.x - from.x) * (to.y - from.y) - (ctrl.y - from.y) * (to.x - from.x) > 0) {
+            Vector2 tmp = from;
+            from = to;
+            to = tmp;
+        }
+        Vector2 previous = { 0 }, previous2 = { 0 };
+        Vector2 current = { 0 };
+
+        for (int j = 0; j <= segments; j++)
+        {
+            float t = 1.0f / segments * j;
+            
+            float a = powf(1.0f - t, 2.0f);
+            float b = 2.0f * (1.0f - t) * t;
+            float c = powf(t, 2.0f);
+            current.y = a * from.y + b * ctrl.y + c * to.y;
+            current.x = a * from.x + b * ctrl.x + c * to.x;
+
+            if (j && !(j & 1)) {              
+                draw_quad(
+                    previous2, previous, current, shape.vertex.point[0],
+                    tex, texrect, shape.type & 1 ? NULL : &texorigin, 
+                    calc_color(color, previous2, 0),
+                    calc_color(color, previous, 1),
+                    calc_color(color, current, 2),
+                    calc_color(color, shape.vertex.point[0], 3),
+                    flip
+                );
+            } else if (j == segments) {
+                draw_quad(
+                    previous, previous, current, shape.vertex.point[0],
+                    tex, texrect, shape.type & 1 ? NULL : &texorigin, 
+                    calc_color(color, previous, 0),
+                    calc_color(color, previous, 1),
+                    calc_color(color, current, 2),
+                    calc_color(color, shape.vertex.point[0], 3),
+                    flip
+                );
+            }
+            previous2 = previous;
+            previous = current;
+        }
+    }
+    break; 
+    case DRAW_BEZIER_QUAD_FILL_CTRL:
+    case DRAW_BEZIER_QUAD_FILL_CTRL_TEXFILL:
     {
         Vector2 from = shape.vertex.point[0], to = shape.vertex.point[1], ctrl = shape.vertex.point[2];
         if ((ctrl.x - from.x) * (to.y - from.y) - (ctrl.y - from.y) * (to.x - from.x) < 0) {
@@ -346,7 +390,8 @@ static void draw_shape(draw_shape_t shape, draw_color_t color, Texture2D tex, Re
                     calc_color(color, previous2, 0),
                     calc_color(color, previous, 1),
                     calc_color(color, current, 2),
-                    calc_color(color, shape.vertex.point[0], 3)
+                    calc_color(color, ctrl, 3),
+                    flip
                 );
             } else if (j == segments) {
                 draw_quad(
@@ -355,53 +400,8 @@ static void draw_shape(draw_shape_t shape, draw_color_t color, Texture2D tex, Re
                     calc_color(color, previous, 0),
                     calc_color(color, previous, 1),
                     calc_color(color, current, 2),
-                    calc_color(color, shape.vertex.point[0], 3)
-                );
-            }
-            previous2 = previous;
-            previous = current;
-        }
-    }
-    break; 
-    case DRAW_BEZIER_QUAD_FILL_CTRL:
-    case DRAW_BEZIER_QUAD_FILL_CTRL_TEXFILL:
-    {
-        Vector2 from = shape.vertex.point[0], to = shape.vertex.point[1], ctrl = shape.vertex.point[2];
-        if ((ctrl.x - from.x) * (to.y - from.y) - (ctrl.y - from.y) * (to.x - from.x) > 0) {
-            Vector2 tmp = from;
-            from = to;
-            to = tmp;
-        }
-        Vector2 previous = { 0 }, previous2 = { 0 };
-        Vector2 current = { 0 };
-
-        for (int j = 0; j <= segments; j++)
-        {
-            float t = 1.0f / segments * j;
-            
-            float a = powf(1.0f - t, 2.0f);
-            float b = 2.0f * (1.0f - t) * t;
-            float c = powf(t, 2.0f);
-            current.y = a * from.y + b * ctrl.y + c * to.y;
-            current.x = a * from.x + b * ctrl.x + c * to.x;
-
-            if (j && !(j & 1)) {              
-                draw_quad(
-                    previous2, previous, current, ctrl,
-                    tex, texrect, shape.type & 1 ? NULL : &texorigin, 
-                    calc_color(color, previous2, 0),
-                    calc_color(color, previous, 1),
-                    calc_color(color, current, 2),
-                    calc_color(color, ctrl, 3)
-                );
-            } else if (j == segments) {
-                draw_quad(
-                    previous, previous, current, ctrl,
-                    tex, texrect, shape.type & 1 ? NULL : &texorigin, 
-                    calc_color(color, previous, 0),
-                    calc_color(color, previous, 1),
-                    calc_color(color, current, 2),
-                    calc_color(color, ctrl, 3)
+                    calc_color(color, ctrl, 3),
+                    flip
                 );
             }
             previous2 = previous;
@@ -432,7 +432,8 @@ static void draw_shape(draw_shape_t shape, draw_color_t color, Texture2D tex, Re
             calc_color(color, x1, 0),
             calc_color(color, x2, 1),
             calc_color(color, x3, 2),
-            calc_color(color, x4, 3)
+            calc_color(color, x4, 3),
+            flip
         );
     }
     case DRAW_LINE:
@@ -458,7 +459,8 @@ static void draw_shape(draw_shape_t shape, draw_color_t color, Texture2D tex, Re
             calc_color(color, x1, 0),
             calc_color(color, x2, 1),
             calc_color(color, x3, 2),
-            calc_color(color, x4, 3)
+            calc_color(color, x4, 3),
+            flip
         );
     }
     break;
@@ -474,17 +476,30 @@ static void draw_shape(draw_shape_t shape, draw_color_t color, Texture2D tex, Re
             calc_color(color, shape.vertex.point[0], 0),
             calc_color(color, shape.vertex.point[1], 1),
             calc_color(color, shape.vertex.point[2], 2),
-            calc_color(color, shape.vertex.point[3], 3)
+            calc_color(color, shape.vertex.point[3], 3),
+            flip
         );
     }
     break;
     case DRAW_RECT_2:
     case DRAW_RECT_2_TEXFILL:
     {
-        Vector2 x1 = (Vector2) { shape.rect.rect2.x, shape.rect.rect2.y };
-        Vector2 x2 = (Vector2) { shape.rect.rect2.x, shape.rect.rect2.y + shape.rect.rect2.height };
-        Vector2 x3 = (Vector2) { shape.rect.rect2.x + shape.rect.rect2.width, shape.rect.rect2.y + shape.rect.rect2.height };
-        Vector2 x4 = (Vector2) { shape.rect.rect2.x + shape.rect.rect2.width, shape.rect.rect2.y };
+        Vector2 x1 = (Vector2) {
+            shape.rect.rect2.x,
+            shape.rect.rect2.y
+        };
+        Vector2 x2 = (Vector2) {
+            shape.rect.rect2.x,
+            shape.rect.rect2.y + shape.rect.rect2.height
+        };
+        Vector2 x3 = (Vector2) {
+            shape.rect.rect2.x + shape.rect.rect2.width,
+            shape.rect.rect2.y + shape.rect.rect2.height
+        };
+        Vector2 x4 = (Vector2) {
+            shape.rect.rect2.x + shape.rect.rect2.width,
+            shape.rect.rect2.y
+        };
 
         draw_quad(
             x1, x2, x3, x4,
@@ -492,16 +507,29 @@ static void draw_shape(draw_shape_t shape, draw_color_t color, Texture2D tex, Re
             calc_color(color, x1, 0),
             calc_color(color, x2, 1),
             calc_color(color, x3, 2),
-            calc_color(color, x4, 3)
+            calc_color(color, x4, 3),
+            flip
         );
     }
     case DRAW_RECT:
     case DRAW_RECT_TEXFILL:
     {
-        Vector2 x1 = (Vector2) { shape.rect.rect.x, shape.rect.rect.y };
-        Vector2 x2 = (Vector2) { shape.rect.rect.x, shape.rect.rect.y + shape.rect.rect.height };
-        Vector2 x3 = (Vector2) { shape.rect.rect.x + shape.rect.rect.width, shape.rect.rect.y + shape.rect.rect.height };
-        Vector2 x4 = (Vector2) { shape.rect.rect.x + shape.rect.rect.width, shape.rect.rect.y };
+        Vector2 x1 = (Vector2) {
+            shape.rect.rect.x,
+            shape.rect.rect.y
+        };
+        Vector2 x2 = (Vector2) {
+            shape.rect.rect.x,
+            shape.rect.rect.y + shape.rect.rect.height
+        };
+        Vector2 x3 = (Vector2) {
+            shape.rect.rect.x + shape.rect.rect.width,
+            shape.rect.rect.y + shape.rect.rect.height
+        };
+        Vector2 x4 = (Vector2) {
+            shape.rect.rect.x + shape.rect.rect.width,
+            shape.rect.rect.y
+        };
 
         draw_quad(
             x1, x2, x3, x4,
@@ -509,7 +537,172 @@ static void draw_shape(draw_shape_t shape, draw_color_t color, Texture2D tex, Re
             calc_color(color, x1, 0),
             calc_color(color, x2, 1),
             calc_color(color, x3, 2),
-            calc_color(color, x4, 3)
+            calc_color(color, x4, 3),
+            flip
+        );
+    }
+    break;
+    case DRAW_RECT_2_OUTLINE:
+    case DRAW_RECT_2_OUTLINE_TEXFILL:
+    {
+        Vector2 x11 = (Vector2) {
+            shape.rect.rect2.x - shape.thickness,
+            shape.rect.rect2.y - shape.thickness
+        };
+        Vector2 x12 = (Vector2) {
+            shape.rect.rect2.x + shape.thickness,
+            shape.rect.rect2.y + shape.thickness
+        };
+        Vector2 x21 = (Vector2) {
+            shape.rect.rect2.x - shape.thickness,
+            shape.rect.rect2.y + shape.rect.rect2.height + shape.thickness
+        };
+        Vector2 x22 = (Vector2) {
+            shape.rect.rect2.x + shape.thickness,
+            shape.rect.rect2.y + shape.rect.rect2.height - shape.thickness
+        };
+        Vector2 x31 = (Vector2) {
+            shape.rect.rect2.x + shape.rect.rect2.width + shape.thickness,
+            shape.rect.rect2.y + shape.rect.rect2.height + shape.thickness
+        };
+        Vector2 x32 = (Vector2) {
+            shape.rect.rect2.x + shape.rect.rect2.width - shape.thickness,
+            shape.rect.rect2.y + shape.rect.rect2.height - shape.thickness
+        };
+        Vector2 x41 = (Vector2) {
+            shape.rect.rect2.x + shape.rect.rect2.width + shape.thickness,
+            shape.rect.rect2.y - shape.thickness
+        };
+        Vector2 x42 = (Vector2) {
+            shape.rect.rect2.x + shape.rect.rect2.width - shape.thickness,
+            shape.rect.rect2.y + shape.thickness
+        };
+
+        draw_quad(
+            x11, x21, x22, x12,
+            tex, texrect, shape.type & 1 ? NULL : &texorigin, 
+            calc_color(color, x11, 0),
+            calc_color(color, x21, 1),
+            calc_color(color, x22, 2),
+            calc_color(color, x12, 3),
+            flip
+        );
+        draw_quad(
+            x21, x31, x32, x22,
+            tex, texrect, shape.type & 1 ? NULL : &texorigin, 
+            calc_color(color, x21, 0),
+            calc_color(color, x31, 1),
+            calc_color(color, x32, 2),
+            calc_color(color, x22, 3),
+            flip
+        );
+        draw_quad(
+            x31, x41, x42, x32,
+            tex, texrect, shape.type & 1 ? NULL : &texorigin, 
+            calc_color(color, x31, 0),
+            calc_color(color, x41, 1),
+            calc_color(color, x42, 2),
+            calc_color(color, x32, 3),
+            flip
+        );
+        draw_quad(
+            x41, x11, x12, x42,
+            tex, texrect, shape.type & 1 ? NULL : &texorigin, 
+            calc_color(color, x41, 0),
+            calc_color(color, x11, 1),
+            calc_color(color, x12, 2),
+            calc_color(color, x42, 3),
+            flip
+        );
+    }
+    case DRAW_RECT_OUTLINE:
+    case DRAW_RECT_OUTLINE_TEXFILL:
+    {
+        Vector2 x11 = (Vector2) {
+            shape.rect.rect.x - shape.thickness,
+            shape.rect.rect.y - shape.thickness
+        };
+        Vector2 x12 = (Vector2) {
+            shape.rect.rect.x + shape.thickness,
+            shape.rect.rect.y + shape.thickness
+        };
+        Vector2 x21 = (Vector2) {
+            shape.rect.rect.x - shape.thickness,
+            shape.rect.rect.y + shape.rect.rect.height + shape.thickness
+        };
+        Vector2 x22 = (Vector2) {
+            shape.rect.rect.x + shape.thickness,
+            shape.rect.rect.y + shape.rect.rect.height - shape.thickness
+        };
+        Vector2 x31 = (Vector2) {
+            shape.rect.rect.x + shape.rect.rect.width + shape.thickness,
+            shape.rect.rect.y + shape.rect.rect.height + shape.thickness
+        };
+        Vector2 x32 = (Vector2) {
+            shape.rect.rect.x + shape.rect.rect.width - shape.thickness,
+            shape.rect.rect.y + shape.rect.rect.height - shape.thickness
+        };
+        Vector2 x41 = (Vector2) {
+            shape.rect.rect.x + shape.rect.rect.width + shape.thickness,
+            shape.rect.rect.y - shape.thickness
+        };
+        Vector2 x42 = (Vector2) {
+            shape.rect.rect.x + shape.rect.rect.width - shape.thickness,
+            shape.rect.rect.y + shape.thickness
+        };
+
+        draw_quad(
+            x11, x21, x22, x12,
+            tex, texrect, shape.type & 1 ? NULL : &texorigin, 
+            calc_color(color, x11, 0),
+            calc_color(color, x21, 1),
+            calc_color(color, x22, 2),
+            calc_color(color, x12, 3),
+            flip
+        );
+        draw_quad(
+            x21, x31, x32, x22,
+            tex, texrect, shape.type & 1 ? NULL : &texorigin, 
+            calc_color(color, x21, 0),
+            calc_color(color, x31, 1),
+            calc_color(color, x32, 2),
+            calc_color(color, x22, 3),
+            flip
+        );
+        draw_quad(
+            x31, x41, x42, x32,
+            tex, texrect, shape.type & 1 ? NULL : &texorigin, 
+            calc_color(color, x31, 0),
+            calc_color(color, x41, 1),
+            calc_color(color, x42, 2),
+            calc_color(color, x32, 3),
+            flip
+        );
+        draw_quad(
+            x41, x11, x12, x42,
+            tex, texrect, shape.type & 1 ? NULL : &texorigin, 
+            calc_color(color, x41, 0),
+            calc_color(color, x11, 1),
+            calc_color(color, x12, 2),
+            calc_color(color, x42, 3),
+            flip
+        );
+    }
+    break;
+    case DRAW_TRIANGLE:
+    case DRAW_TRIANGLE_TEXFILL:
+    {
+        draw_quad(
+            shape.vertex.point[0],
+            shape.vertex.point[1],
+            shape.vertex.point[2],
+            shape.vertex.point[2],
+            tex, texrect, shape.type & 1 ? NULL : &texorigin, 
+            calc_color(color, shape.vertex.point[0], 0),
+            calc_color(color, shape.vertex.point[1], 1),
+            calc_color(color, shape.vertex.point[2], 2),
+            calc_color(color, shape.vertex.point[2], 2),
+            flip
         );
     }
     break;
@@ -544,70 +737,79 @@ static void do_draw(ecs_iter_t *it)
     CHECK_COL(draw_texture_t,       texture_col,   9)
     CHECK_COL(transform_t,          transform_col, 10)
 
+    draw_entity_info_t info = {
+        .color = { .type = COLOR_PLAIN, .color = WHITE },
+        .flip = false,
+        .font = { GetFontDefault() },
+        .tex = { 1, 1, 1, 1, 7 },
+        .texrec = { 0.0f, 0.0f, 1.0f, 1.0f },
+        .texorigin = { 0.0f, 0.0f }
+    };
+
     if (has & has_transform_col) {
         rlPushMatrix();
     }
-    check_transform(has_single & has_transform_col, transform_col, 0);
-    check_custom_pre(has_single & has_custom_col, custom_col, 0);
+    check_transform(has_single & has_transform_col, transform_col, &info.flip, 0);
     check_mode(has_single & has_mode_col, mode_col, 0);
-
-    Texture2D tex = { 1, 1, 1, 1, 7 };
-    Rectangle texrec = { 0.0f, 0.0f, 1.0f, 1.0f };
-    Vector2 texorigin = { 0.0f, 0.0f };
-
-    check_canvas(has_single & has_canvas_col, &tex, &texrec, canvas_col, 0);
-    check_tex(has_single & has_texture_col, &tex, &texrec, texture_col, 0);
-    check_sprite(has_single & has_sprite_col, &texrec, &texorigin, sprite_col, 0);
-
+    check_canvas(has_single & has_canvas_col, &info.tex, &info.texrec, canvas_col, 0);
+    check_tex(has_single & has_texture_col, &info.tex, &info.texrec, texture_col, 0);
+    check_sprite(has_single & has_sprite_col, &info.texrec, &info.texorigin, sprite_col, 0);
+    if (has_single & has_font_col) {
+        info.font = font_col[0];
+    }
+    if (has_single & has_color_col) {
+        info.color = color_col[0];
+    }
+    
     for (int i = 0; i < it->count; i++) {
-        check_transform(has_arr & has_transform_col, transform_col, i);
-        check_custom_pre(has_arr & has_custom_col, custom_col, i);
+        check_transform(has_arr & has_transform_col, transform_col, &info.flip, i);
         check_mode(has_arr & has_mode_col, mode_col, i);
-        check_canvas(has_arr & has_canvas_col, &tex, &texrec, canvas_col, i);
-        check_tex(has_arr & has_texture_col, &tex, &texrec, texture_col, i);
-        check_sprite(has_arr & has_sprite_col, &texrec, &texorigin, sprite_col, i);
+        check_canvas(has_arr & has_canvas_col, &info.tex, &info.texrec, canvas_col, i);
+        check_tex(has_arr & has_texture_col, &info.tex, &info.texrec, texture_col, i);
+        check_sprite(has_arr & has_sprite_col, &info.texrec, &info.texorigin, sprite_col, i);
+        if (has_arr & has_font_col) {
+            info.font = font_col[i];
+        }
+        if (has_arr & has_color_col) {
+            info.color = color_col[i];
+        }
 
         if (has & has_text_col) {
             draw_text(
                 has_arr & has_text_col ? text_col[i] : text_col[0],
-                has_arr & has_font_col ? font_col[i].font :
-                has_single & has_font_col ? font_col[0].font :
-                GetFontDefault(),
-                has_arr & has_color_col ? color_col[i] :
-                has_single & has_color_col ? color_col[0] :
-                (draw_color_t) { .type = COLOR_PLAIN, .color = WHITE }
+                info.font,
+                info.color
             );
         }
         if (has & has_shape_col) {
             draw_shape(
                 has_arr & has_shape_col ? shape_col[i] : shape_col[0],
-                has_arr & has_color_col ? color_col[i] :
-                has_single & has_color_col ? color_col[0] :
-                (draw_color_t) { .type = COLOR_PLAIN, .color = WHITE },
-                tex,
-                texrec,
-                texorigin
+                info.color,
+                info.tex,
+                info.texrec,
+                info.texorigin,
+                info.flip
             );
         } else if (has & (has_texture_col | has_canvas_col)) {
             draw_shape(
                 (draw_shape_t) {
                     .type = DRAW_RECT,
                     .rect.rect = {
-                        .x = texorigin.x,
-                        .y = texorigin.y,
-                        .width = texrec.width,
-                        .height = texrec.height
+                        .x = info.texorigin.x,
+                        .y = info.texorigin.y,
+                        .width = info.texrec.width,
+                        .height = info.texrec.height
                     }
                 },
-                has_arr & has_color_col ? color_col[i] :
-                has_single & has_color_col ? color_col[0] :
-                (draw_color_t) { .type = COLOR_PLAIN, .color = WHITE },
-                tex,
-                texrec,
-                texorigin
+                info.color,
+                info.tex,
+                info.texrec,
+                info.texorigin,
+                info.flip
             );
+            check_custom(has_single & has_custom_col, &info, custom_col, 0);
+            check_custom(has_arr & has_custom_col, &info, custom_col, i);
         }
-        check_custom_post(has_arr & has_custom_col, custom_col, i);
     }
 
     if (has & has_mode_col) {
@@ -615,8 +817,6 @@ static void do_draw(ecs_iter_t *it)
         EndScissorMode();
         EndShaderMode();
     }
-    check_custom_post(has_single & has_custom_col, custom_col, 0);
-    
     if (has & has_transform_col) {
         rlPopMatrix();
     }
@@ -633,19 +833,12 @@ static int cmp(ecs_entity_t e1, const void *v1, ecs_entity_t e2, const void *v2)
     return (p1->priority > p2->priority) - (p1->priority < p2->priority);
 }
 
-static void process_canvas(ecs_iter_t *it)
+static void init_canvas_system(ecs_iter_t *it)
 {
     draw_canvas_t *canvas_col = ecs_field(it, draw_canvas_t, 1);
     for (int i = it->count - 1; ~i; i--) {
-        BeginTextureMode(canvas_col[i].canvas);
         if (canvas_col[i].is_3d) {
-            if (canvas_col[i].has_vr) {
-                BeginVrStereoMode(canvas_col[i].vr);
-            }
-            if (canvas_col[i].has_camera) {
-                BeginMode3D(canvas_col[i].camera.three);
-            }
-            ecs_entity_t dodraw = ecs_system_init(it->world, &(ecs_system_desc_t) {
+            canvas_col[i].draw_system = ecs_system_init(it->world, &(ecs_system_desc_t) {
                 .query = {
                     .filter.terms = {
                         { ecs_pair(Draw, it->entities[i]) }
@@ -653,18 +846,8 @@ static void process_canvas(ecs_iter_t *it)
                 },
                 .callback = do_draw_3d
             });
-            ecs_run(it->world, dodraw, 0.0f, NULL);
-            if (canvas_col[i].has_camera) {
-                EndMode3D();
-            }
-            if (canvas_col[i].has_vr) {
-                EndVrStereoMode();
-            }
         } else {
-            if (canvas_col[i].has_camera) {
-                BeginMode2D(canvas_col[i].camera.two);
-            }
-            ecs_entity_t dodraw = ecs_system_init(it->world, &(ecs_system_desc_t) {
+            canvas_col[i].draw_system = ecs_system_init(it->world, &(ecs_system_desc_t) {
                 .query = { 
                     .filter = {
                         .terms = {
@@ -688,7 +871,35 @@ static void process_canvas(ecs_iter_t *it)
                 },
                 .callback = do_draw
             });
-            ecs_run(it->world, dodraw, 0.0f, NULL);
+        }
+    }
+}
+
+static void process_canvas(ecs_iter_t *it)
+{
+    draw_canvas_t *canvas_col = ecs_field(it, draw_canvas_t, 1);
+    for (int i = it->count - 1; ~i; i--) {
+        BeginTextureMode(canvas_col[i].canvas);
+        ClearBackground(canvas_col[i].background);
+        if (canvas_col[i].is_3d) {
+            if (canvas_col[i].has_vr) {
+                BeginVrStereoMode(canvas_col[i].vr);
+            }
+            if (canvas_col[i].has_camera) {
+                BeginMode3D(canvas_col[i].camera.three);
+            }
+            ecs_run(it->world, canvas_col[i].draw_system, 0.0f, NULL);
+            if (canvas_col[i].has_camera) {
+                EndMode3D();
+            }
+            if (canvas_col[i].has_vr) {
+                EndVrStereoMode();
+            }
+        } else {
+            if (canvas_col[i].has_camera) {
+                BeginMode2D(canvas_col[i].camera.two);
+            }
+            ecs_run(it->world, canvas_col[i].draw_system, 0.0f, NULL);
             if (canvas_col[i].has_camera) {
                 EndMode2D();
             }
@@ -718,30 +929,6 @@ static void update_sprite(ecs_iter_t *it)
         if (sprite_col[i].framecur == sprite_col[i].framecnt * sprite_col[i].frametime) {
             sprite_col[i].framecur = 0;
         }
-    }
-}
-
-static void remove_canvas(ecs_iter_t *it)
-{
-    draw_canvas_t *canvas_col = ecs_field(it, draw_canvas_t, 1);
-    for (int i = 0; i < it->count; i++) {
-        UnloadRenderTexture(canvas_col[i].canvas);
-    }
-}
-
-static void remove_font(ecs_iter_t *it)
-{
-    draw_font_t *font_col = ecs_field(it, draw_font_t, 1);
-    for (int i = 0; i < it->count; i++) {
-        UnloadFont(font_col[i].font);
-    }
-}
-
-static void remove_texture(ecs_iter_t *it)
-{
-    draw_texture_t *texture_col = ecs_field(it, draw_texture_t, 1);
-    for (int i = 0; i < it->count; i++) {
-        UnloadTexture(texture_col[i].texture);
     }
 }
 
@@ -789,12 +976,14 @@ void DrawModuleImport(ecs_world_t *ecs)
 
     ecs_system_init(ecs, &(ecs_system_desc_t) {
         .entity = ecs_entity(ecs, {
-            .add = { ecs_dependson(postdraw) }
+            .add = { ecs_dependson(predraw) }
         }),
         .query.filter.terms = {
-            { ecs_id(draw_canvas_t), .oper = EcsOr, .src = { .flags = EcsSelf | EcsUp, .trav = Draw } }
+            { ecs_id(draw_canvas_t), .src = { .flags = EcsSelf | EcsUp, .trav = Draw } },
+            { Draw }
         },
-        .callback = process_canvas
+        .callback = process_canvas,
+        .no_staging = true
     }),
     ecs_system_init(ecs, &(ecs_system_desc_t) {
         .entity = ecs_entity(ecs, {
@@ -854,20 +1043,8 @@ void DrawModuleImport(ecs_world_t *ecs)
         .callback = check_sprite_avaliable
     });
     ecs_observer_init(ecs, &(ecs_observer_desc_t) {
-        .filter.terms = { { ecs_id(draw_font_t) } },
-        .events = { EcsOnRemove },
-        .callback = remove_font
-    });
-    ecs_observer_init(ecs, &(ecs_observer_desc_t) {
-        .filter.terms = { { ecs_id(draw_texture_t) } },
-        .events = { EcsOnRemove },
-        .callback = remove_texture
-    });
-    ecs_observer_init(ecs, &(ecs_observer_desc_t) {
-        .filter.terms = {
-            { ecs_id(draw_canvas_t), .src = { .flags = EcsSelf | EcsUp, .trav = Draw } },
-        },
-        .events = { EcsOnRemove },
-        .callback = remove_canvas
+        .filter.terms = { { ecs_id(draw_canvas_t) } },
+        .events = { EcsOnSet },
+        .callback = init_canvas_system
     });
 }

@@ -25,8 +25,6 @@
 #include "engine/window.h"
 #include "utils/array.h"
 
-DEF_ARRAY(Vector2)
-
 #define DEFAULT_SEGMENTS 30
 
 typedef enum {
@@ -35,6 +33,40 @@ typedef enum {
     COLOR_FADE_LINEAR,
     COLOR_FADE_RADIAL
 } draw_type_color_t;
+
+typedef struct {
+    draw_type_color_t type;
+    Color color;
+    Color color2;
+    union {
+        struct {
+            Color color3;
+            Color color4;
+        };
+        struct {
+            Vector2 start;
+            Vector2 end;
+        } linear;
+        struct {
+            Vector2 center;
+            float inner;
+            float outer;
+        } radial;
+    };
+} draw_color_t;
+
+typedef struct {
+    Font font;
+} draw_font_t;
+
+typedef struct {
+    draw_font_t font;
+    Texture2D tex;
+    Rectangle texrec;
+    Vector2 texorigin;
+    draw_color_t color;
+    bool flip;
+} draw_entity_info_t;
 
 typedef enum {
     DRAW_BEZIER,
@@ -83,7 +115,9 @@ typedef struct {
     bool is_3d;
     bool has_camera;
     bool has_vr;
-    RenderTexture canvas;
+    Color background;
+    ecs_entity_t draw_system;
+    RenderTexture2D canvas;
     union {
         Camera2D two;
         Camera3D three;
@@ -92,34 +126,9 @@ typedef struct {
 } draw_canvas_t;
 
 typedef struct {
-    draw_type_color_t type;
-    Color color;
-    Color color2;
-    union {
-        struct {
-            Color color3;
-            Color color4;
-        };
-        struct {
-            Vector2 start;
-            Vector2 end;
-        } linear;
-        struct {
-            Vector2 center;
-            float inner;
-            float outer;
-        } radial;
-    };
-} draw_color_t;
-
-typedef struct {
-    void *prearg, *postarg;
-    void (*pre)(void*), (*post)(void*);
+    void *arg;
+    void (*func)(void*, draw_entity_info_t*);
 } draw_custom_t;
-
-typedef struct {
-    Font font;
-} draw_font_t;
 
 typedef struct {
     Shader    shader;
@@ -154,9 +163,6 @@ typedef struct {
         struct {
             Vector2 point[4];
         } vertex;
-        struct {
-            ARRAY(Vector2) arr;
-        } fill;
     };
 } draw_shape_t;
 

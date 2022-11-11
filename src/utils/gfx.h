@@ -23,37 +23,67 @@
 void draw_quad(
     Vector2 a, Vector2 b, Vector2 c, Vector2 d, 
     Texture2D tex, Rectangle texrec, Vector2 *origin,
-    Color color, Color color2, Color color3, Color color4
+    Color color, Color color2, Color color3, Color color4, bool flip
 )
 {
     rlSetTexture(tex.id);
     rlBegin(RL_QUADS);
-    if (!origin) {
-        rlColor4ub(color.r, color.g, color.b, color.a);
-        rlTexCoord2f(texrec.x / tex.width, texrec.y / tex.height);
-        rlVertex2f(a.x, a.y);
-        rlColor4ub(color2.r, color2.g, color2.b, color2.a);
-        rlTexCoord2f((texrec.x + texrec.width) / tex.width, texrec.y / texrec.height);
-        rlVertex2f(b.x, b.y);
-        rlColor4ub(color3.r, color3.g, color3.b, color3.a);
-        rlTexCoord2f((texrec.x + texrec.width) / tex.width, (texrec.y + texrec.height) / tex.height);
-        rlVertex2f(c.x, c.y);
-        rlColor4ub(color4.r, color4.g, color4.b, color4.a);
-        rlTexCoord2f(texrec.x / tex.width, (texrec.y + texrec.height) / tex.height);
-        rlVertex2f(d.x, d.y);
+    if (flip) {
+        if (!origin) {
+            rlColor4ub(color.r, color.g, color.b, color.a);
+            rlTexCoord2f(texrec.x / tex.width, texrec.y / tex.height);
+            rlVertex2f(a.x, a.y);
+            rlColor4ub(color4.r, color4.g, color4.b, color4.a);
+            rlTexCoord2f(texrec.x / tex.width, (texrec.y + texrec.height) / tex.height);
+            rlVertex2f(d.x, d.y);
+            rlColor4ub(color3.r, color3.g, color3.b, color3.a);
+            rlTexCoord2f((texrec.x + texrec.width) / tex.width, (texrec.y + texrec.height) / tex.height);
+            rlVertex2f(c.x, c.y);
+            rlColor4ub(color2.r, color2.g, color2.b, color2.a);
+            rlTexCoord2f((texrec.x + texrec.width) / tex.width, texrec.y / texrec.height);
+            rlVertex2f(b.x, b.y);
+        } else {
+            rlColor4ub(color.r, color.g, color.b, color.a);
+            rlTexCoord2f((texrec.x + a.x - origin->x) / tex.width, (texrec.y + a.y - origin->y) / tex.height);
+            rlVertex2f(a.x, a.y);
+            rlColor4ub(color4.r, color4.g, color4.b, color4.a);
+            rlTexCoord2f((texrec.x + d.x - origin->x) / tex.width, (texrec.y + d.y - origin->y) / tex.height);
+            rlVertex2f(d.x, d.y);
+            rlColor4ub(color3.r, color3.g, color3.b, color3.a);
+            rlTexCoord2f((texrec.x + c.x - origin->x) / tex.width, (texrec.y + c.y - origin->y) / tex.height);
+            rlVertex2f(c.x, c.y);
+            rlColor4ub(color2.r, color2.g, color2.b, color2.a);
+            rlTexCoord2f((texrec.x + b.x - origin->x) / tex.width, (texrec.y + b.y - origin->y) / tex.height);
+            rlVertex2f(b.x, b.y);
+        }
     } else {
-        rlColor4ub(color.r, color.g, color.b, color.a);
-        rlTexCoord2f((texrec.x + a.x - origin->x) / tex.width, (texrec.y + a.y - origin->y) / tex.height);
-        rlVertex2f(a.x, a.y);
-        rlColor4ub(color2.r, color2.g, color2.b, color2.a);
-        rlTexCoord2f((texrec.x + b.x - origin->x) / tex.width, (texrec.y + b.y - origin->y) / tex.height);
-        rlVertex2f(b.x, b.y);
-        rlColor4ub(color3.r, color3.g, color3.b, color3.a);
-        rlTexCoord2f((texrec.x + c.x - origin->x) / tex.width, (texrec.y + c.y - origin->y) / tex.height);
-        rlVertex2f(c.x, c.y);
-        rlColor4ub(color4.r, color4.g, color4.b, color4.a);
-        rlTexCoord2f((texrec.x + d.x - origin->x) / tex.width, (texrec.y + d.y - origin->y) / tex.height);
-        rlVertex2f(d.x, d.y);
+        if (!origin) {
+            rlColor4ub(color.r, color.g, color.b, color.a);
+            rlTexCoord2f(texrec.x / tex.width, texrec.y / tex.height);
+            rlVertex2f(a.x, a.y);
+            rlColor4ub(color2.r, color2.g, color2.b, color2.a);
+            rlTexCoord2f((texrec.x + texrec.width) / tex.width, texrec.y / texrec.height);
+            rlVertex2f(b.x, b.y);
+            rlColor4ub(color3.r, color3.g, color3.b, color3.a);
+            rlTexCoord2f((texrec.x + texrec.width) / tex.width, (texrec.y + texrec.height) / tex.height);
+            rlVertex2f(c.x, c.y);
+            rlColor4ub(color4.r, color4.g, color4.b, color4.a);
+            rlTexCoord2f(texrec.x / tex.width, (texrec.y + texrec.height) / tex.height);
+            rlVertex2f(d.x, d.y);
+        } else {
+            rlColor4ub(color.r, color.g, color.b, color.a);
+            rlTexCoord2f((texrec.x + a.x - origin->x) / tex.width, (texrec.y + a.y - origin->y) / tex.height);
+            rlVertex2f(a.x, a.y);
+            rlColor4ub(color2.r, color2.g, color2.b, color2.a);
+            rlTexCoord2f((texrec.x + b.x - origin->x) / tex.width, (texrec.y + b.y - origin->y) / tex.height);
+            rlVertex2f(b.x, b.y);
+            rlColor4ub(color3.r, color3.g, color3.b, color3.a);
+            rlTexCoord2f((texrec.x + c.x - origin->x) / tex.width, (texrec.y + c.y - origin->y) / tex.height);
+            rlVertex2f(c.x, c.y);
+            rlColor4ub(color4.r, color4.g, color4.b, color4.a);
+            rlTexCoord2f((texrec.x + d.x - origin->x) / tex.width, (texrec.y + d.y - origin->y) / tex.height);
+            rlVertex2f(d.x, d.y);
+        }
     }
     rlEnd();
 }

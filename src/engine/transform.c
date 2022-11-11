@@ -39,7 +39,7 @@ static void calc_transform(ecs_iter_t *it)
 {
     transform_t *transform_col = ecs_field(it, transform_t, 1);
 
-    if (ecs_field_is_set(it, 2)) {
+    /*if (ecs_field_is_set(it, 2)) {
         transform_t *transform_parent_col = ecs_field(it, transform_t, 2);
         for (int i = 0; i < it->count; i++) {
             transform_col[i]._o = transform_parent_col[i]._t;
@@ -67,7 +67,7 @@ static void calc_transform(ecs_iter_t *it)
             transform_col[i]._s.x *= transform_col[i].scale.x;
             transform_col[i]._s.y *= transform_col[i].scale.y;
         }
-    } else {
+    } else {*/
         for (int i = 0; i < it->count; i++) {
             transform_col[i]._t = transform_col[i].translation;
             
@@ -77,7 +77,7 @@ static void calc_transform(ecs_iter_t *it)
 
             transform_col[i]._o = transform_col[i].origin;
         }
-    }
+    //}
 }
 
 Vector2 do_translation(Vector2 point, Vector2 tran)
@@ -126,11 +126,11 @@ void TransformModuleImport(ecs_world_t *ecs)
 
     ecs_add_id(ecs, TransformChildOf, EcsAcyclic);
 
-    /*ecs_observer_init(ecs, &(ecs_observer_desc_t) {
+    ecs_observer_init(ecs, &(ecs_observer_desc_t) {
         .filter.terms = { { ecs_id(transform_t) } },
         .events = { EcsOnSet },
         .callback = check_transform_avaliable
-    });*/
+    });
     ecs_system_init(ecs, &(ecs_system_desc_t) {
         .entity = ecs_entity(ecs, {
             .add = { ecs_dependson(EcsPreUpdate) }

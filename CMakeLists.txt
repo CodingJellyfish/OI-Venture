@@ -8,7 +8,7 @@ if (NOT flecs_FOUND)
     FetchContent_Declare(
         flecs
         GIT_REPOSITORY https://github.com/SanderMertens/flecs.git
-        GIT_TAG v3.0.4
+        GIT_TAG v3.1.0
     )
     FetchContent_MakeAvailable(flecs)
 endif()
