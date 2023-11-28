@@ -1,0 +1,461 @@
+[
+{
+  "directory": "c:\\Users\\dumao\\Desktop\\KHFanClub",
+  "arguments": ["clang.exe", "-c", "-Qunused-arguments", "-m64", "-g", "-O0", "-Iinclude", "-Ilib\\flecs\\include", "-Ilib\\sokol\\include", "-DKH_DEBUG", "-fexceptions", "-fcxx-exceptions", "-o", "build\\.objs\\KHFanClub\\windows\\x64\\debug\\src\\graphics\\blend_mode.c.obj", "src\\graphics\\blend_mode.c"],
+  "file": "src\\graphics\\blend_mode.c"
+},
+{
+  "directory": "c:\\Users\\dumao\\Desktop\\KHFanClub",
+  "arguments": ["clang.exe", "-c", "-Qunused-arguments", "-m64", "-g", "-O0", "-Iinclude", "-Ilib\\flecs\\include", "-Ilib\\sokol\\include", "-DKH_DEBUG", "-fexceptions", "-fcxx-exceptions", "-o", "build\\.objs\\KHFanClub\\windows\\x64\\debug\\src\\graphics\\drawable.c.obj", "src\\graphics\\drawable.c"],
+  "file": "src\\graphics\\drawable.c"
+},
+{
+  "directory": "c:\\Users\\dumao\\Desktop\\KHFanClub",
+  "arguments": ["clang.exe", "-c", "-Qunused-arguments", "-m64", "-g", "-O0", "-Iinclude", "-Ilib\\flecs\\include", "-Ilib\\sokol\\include", "-DKH_DEBUG", "-fexceptions", "-fcxx-exceptions", "-o", "build\\.objs\\KHFanClub\\windows\\x64\\debug\\src\\graphics\\drawable_child.c.obj", "src\\graphics\\drawable_child.c"],
+  "file": "src\\graphics\\drawable_child.c"
+},
+{
+  "directory": "c:\\Users\\dumao\\Desktop\\KHFanClub",
+  "arguments": ["clang.exe", "-c", "-Qunused-arguments", "-m64", "-g", "-O0", "-Iinclude", "-Ilib\\flecs\\include", "-Ilib\\sokol\\include", "-DKH_DEBUG", "-fexceptions", "-fcxx-exceptions", "-o", "build\\.objs\\KHFanClub\\windows\\x64\\debug\\src\\graphics\\render_state.c.obj", "src\\graphics\\render_state.c"],
+  "file": "src\\graphics\\render_state.c"
+},
+{
+  "directory": "c:\\Users\\dumao\\Desktop\\KHFanClub",
+  "arguments": ["clang.exe", "-c", "-Qunused-arguments", "-m64", "-g", "-O0", "-Iinclude", "-Ilib\\flecs\\include", "-Ilib\\sokol\\include", "-DKH_DEBUG", "-fexceptions", "-fcxx-exceptions", "-o", "build\\.objs\\KHFanClub\\windows\\x64\\debug\\src\\graphics\\render_target.c.obj", "src\\graphics\\render_target.c"],
+  "file": "src\\graphics\\render_target.c"
+},
+{
+  "directory": "c:\\Users\\dumao\\Desktop\\KHFanClub",
+  "arguments": ["clang.exe", "-c", "-Qunused-arguments", "-m64", "-g", "-O0", "-Iinclude", "-Ilib\\flecs\\include", "-Ilib\\sokol\\include", "-DKH_DEBUG", "-fexceptions", "-fcxx-exceptions", "-o", "build\\.objs\\KHFanClub\\windows\\x64\\debug\\src\\graphics\\render_window.c.obj", "src\\graphics\\render_window.c"],
+  "file": "src\\graphics\\render_window.c"
+},
+{
+  "directory": "c:\\Users\\dumao\\Desktop\\KHFanClub",
+  "arguments": ["clang.exe", "-c", "-Qunused-arguments", "-m64", "-g", "-O0", "-Iinclude", "-Ilib\\flecs\\include", "-Ilib\\sokol\\include", "-DKH_DEBUG", "-fexceptions", "-fcxx-exceptions", "-o", "build\\.objs\\KHFanClub\\windows\\x64\\debug\\src\\graphics\\shader.c.obj", "src\\graphics\\shader.c"],
+  "file": "src\\graphics\\shader.c"
+},
+{
+  "directory": "c:\\Users\\dumao\\Desktop\\KHFanClub",
+  "arguments": ["clang.exe", "-c", "-Qunused-arguments", "-m64", "-g", "-O0", "-Iinclude", "-Ilib\\flecs\\include", "-Ilib\\sokol\\include", "-DKH_DEBUG", "-fexceptions", "-fcxx-exceptions", "-o", "build\\.objs\\KHFanClub\\windows\\x64\\debug\\src\\graphics\\sprite.c.obj", "src\\graphics\\sprite.c"],
+  "file": "src\\graphics\\sprite.c"
+},
+{
+  "directory": "c:\\Users\\dumao\\Desktop\\KHFanClub",
+  "arguments": ["clang.exe", "-c", "-Qunused-arguments", "-m64", "-g", "-O0", "-Iinclude", "-Ilib\\flecs\\include", "-Ilib\\sokol\\include", "-DKH_DEBUG", "-fexceptions", "-fcxx-exceptions", "-o", "build\\.objs\\KHFanClub\\windows\\x64\\debug\\src\\graphics\\texture.c.obj", "src\\graphics\\texture.c"],
+  "file": "src\\graphics\\texture.c"
+},
+{
+  "directory": "c:\\Users\\dumao\\Desktop\\KHFanClub",
+  "arguments": ["clang.exe", "-c", "-Qunused-arguments", "-m64", "-g", "-O0", "-Iinclude", "-Ilib\\flecs\\include", "-Ilib\\sokol\\include", "-DKH_DEBUG", "-fexceptions", "-fcxx-exceptions", "-o", "build\\.objs\\KHFanClub\\windows\\x64\\debug\\src\\graphics\\transformable.c.obj", "src\\graphics\\transformable.c"],
+  "file": "src\\graphics\\transformable.c"
+},
+{
+  "directory": "c:\\Users\\dumao\\Desktop\\KHFanClub",
+  "arguments": ["clang.exe", "-c", "-Qunused-arguments", "-m64", "-g", "-O0", "-Iinclude", "-Ilib\\flecs\\include", "-Ilib\\sokol\\include", "-DKH_DEBUG", "-fexceptions", "-fcxx-exceptions", "-o", "build\\.objs\\KHFanClub\\windows\\x64\\debug\\src\\main.c.obj", "src\\main.c"],
+  "file": "src\\main.c"
+},
+{
+  "directory": "c:\\Users\\dumao\\Desktop\\KHFanClub",
+  "arguments": ["clang.exe", "-c", "-Qunused-arguments", "-m64", "-g", "-O0", "-Iinclude", "-Ilib\\flecs\\include", "-Ilib\\sokol\\include", "-DKH_DEBUG", "-fexceptions", "-fcxx-exceptions", "-o", "build\\.objs\\KHFanClub\\windows\\x64\\debug\\src\\system\\math.c.obj", "src\\system\\math.c"],
+  "file": "src\\system\\math.c"
+},
+{
+  "directory": "c:\\Users\\dumao\\Desktop\\KHFanClub",
+  "arguments": ["clang.exe", "-c", "-Qunused-arguments", "-m64", "-g", "-O0", "-Iinclude", "-Ilib\\flecs\\include", "-Ilib\\sokol\\include", "-DKH_DEBUG", "-fexceptions", "-fcxx-exceptions", "-o", "build\\.objs\\KHFanClub\\windows\\x64\\debug\\src\\system\\vector.c.obj", "src\\system\\vector.c"],
+  "file": "src\\system\\vector.c"
+},
+{
+  "directory": "c:\\Users\\dumao\\Desktop\\KHFanClub",
+  "arguments": ["clang.exe", "-c", "-Qunused-arguments", "-m64", "-g", "-O0", "-Iinclude", "-Ilib\\flecs\\include", "-Ilib\\sokol\\include", "-DKH_DEBUG", "-fexceptions", "-fcxx-exceptions", "-o", "build\\.objs\\KHFanClub\\windows\\x64\\debug\\src\\window\\keyboard.c.obj", "src\\window\\keyboard.c"],
+  "file": "src\\window\\keyboard.c"
+},
+{
+  "directory": "c:\\Users\\dumao\\Desktop\\KHFanClub",
+  "arguments": ["clang.exe", "-c", "-Qunused-arguments", "-m64", "-g", "-O0", "-Iinclude", "-Ilib\\flecs\\include", "-Ilib\\sokol\\include", "-DKH_DEBUG", "-fexceptions", "-fcxx-exceptions", "-o", "build\\.objs\\KHFanClub\\windows\\x64\\debug\\src\\window\\mouse.c.obj", "src\\window\\mouse.c"],
+  "file": "src\\window\\mouse.c"
+},
+{
+  "directory": "c:\\Users\\dumao\\Desktop\\KHFanClub",
+  "arguments": ["clang.exe", "-c", "-Qunused-arguments", "-m64", "-g", "-O0", "-Iinclude", "-Ilib\\flecs\\include", "-Ilib\\sokol\\include", "-DKH_DEBUG", "-fexceptions", "-fcxx-exceptions", "-o", "build\\.objs\\KHFanClub\\windows\\x64\\debug\\src\\window\\window.c.obj", "src\\window\\window.c"],
+  "file": "src\\window\\window.c"
+},
+{
+  "directory": "c:\\Users\\dumao\\Desktop\\KHFanClub",
+  "arguments": ["clang.exe", "-c", "-Qunused-arguments", "-m64", "-g", "-O0", "-Ilib\\flecs\\include", "-DFLECS_DEBUG", "-fexceptions", "-fcxx-exceptions", "-o", "build\\.objs\\flecs\\windows\\x64\\debug\\lib\\flecs\\src\\addons\\alerts.c.obj", "lib\\flecs\\src\\addons\\alerts.c"],
+  "file": "lib\\flecs\\src\\addons\\alerts.c"
+},
+{
+  "directory": "c:\\Users\\dumao\\Desktop\\KHFanClub",
+  "arguments": ["clang.exe", "-c", "-Qunused-arguments", "-m64", "-g", "-O0", "-Ilib\\flecs\\include", "-DFLECS_DEBUG", "-fexceptions", "-fcxx-exceptions", "-o", "build\\.objs\\flecs\\windows\\x64\\debug\\lib\\flecs\\src\\addons\\app.c.obj", "lib\\flecs\\src\\addons\\app.c"],
+  "file": "lib\\flecs\\src\\addons\\app.c"
+},
+{
+  "directory": "c:\\Users\\dumao\\Desktop\\KHFanClub",
+  "arguments": ["clang.exe", "-c", "-Qunused-arguments", "-m64", "-g", "-O0", "-Ilib\\flecs\\include", "-DFLECS_DEBUG", "-fexceptions", "-fcxx-exceptions", "-o", "build\\.objs\\flecs\\windows\\x64\\debug\\lib\\flecs\\src\\addons\\coredoc.c.obj", "lib\\flecs\\src\\addons\\coredoc.c"],
+  "file": "lib\\flecs\\src\\addons\\coredoc.c"
+},
+{
+  "directory": "c:\\Users\\dumao\\Desktop\\KHFanClub",
+  "arguments": ["clang.exe", "-c", "-Qunused-arguments", "-m64", "-g", "-O0", "-Ilib\\flecs\\include", "-DFLECS_DEBUG", "-fexceptions", "-fcxx-exceptions", "-o", "build\\.objs\\flecs\\windows\\x64\\debug\\lib\\flecs\\src\\addons\\doc.c.obj", "lib\\flecs\\src\\addons\\doc.c"],
+  "file": "lib\\flecs\\src\\addons\\doc.c"
+},
+{
+  "directory": "c:\\Users\\dumao\\Desktop\\KHFanClub",
+  "arguments": ["clang.exe", "-c", "-Qunused-arguments", "-m64", "-g", "-O0", "-Ilib\\flecs\\include", "-DFLECS_DEBUG", "-fexceptions", "-fcxx-exceptions", "-o", "build\\.objs\\flecs\\windows\\x64\\debug\\lib\\flecs\\src\\addons\\expr\\deserialize.c.obj", "lib\\flecs\\src\\addons\\expr\\deserialize.c"],
+  "file": "lib\\flecs\\src\\addons\\expr\\deserialize.c"
+},
+{
+  "directory": "c:\\Users\\dumao\\Desktop\\KHFanClub",
+  "arguments": ["clang.exe", "-c", "-Qunused-arguments", "-m64", "-g", "-O0", "-Ilib\\flecs\\include", "-DFLECS_DEBUG", "-fexceptions", "-fcxx-exceptions", "-o", "build\\.objs\\flecs\\windows\\x64\\debug\\lib\\flecs\\src\\addons\\expr\\serialize.c.obj", "lib\\flecs\\src\\addons\\expr\\serialize.c"],
+  "file": "lib\\flecs\\src\\addons\\expr\\serialize.c"
+},
+{
+  "directory": "c:\\Users\\dumao\\Desktop\\KHFanClub",
+  "arguments": ["clang.exe", "-c", "-Qunused-arguments", "-m64", "-g", "-O0", "-Ilib\\flecs\\include", "-DFLECS_DEBUG", "-fexceptions", "-fcxx-exceptions", "-o", "build\\.objs\\flecs\\windows\\x64\\debug\\lib\\flecs\\src\\addons\\expr\\strutil.c.obj", "lib\\flecs\\src\\addons\\expr\\strutil.c"],
+  "file": "lib\\flecs\\src\\addons\\expr\\strutil.c"
+},
+{
+  "directory": "c:\\Users\\dumao\\Desktop\\KHFanClub",
+  "arguments": ["clang.exe", "-c", "-Qunused-arguments", "-m64", "-g", "-O0", "-Ilib\\flecs\\include", "-DFLECS_DEBUG", "-fexceptions", "-fcxx-exceptions", "-o", "build\\.objs\\flecs\\windows\\x64\\debug\\lib\\flecs\\src\\addons\\expr\\utils.c.obj", "lib\\flecs\\src\\addons\\expr\\utils.c"],
+  "file": "lib\\flecs\\src\\addons\\expr\\utils.c"
+},
+{
+  "directory": "c:\\Users\\dumao\\Desktop\\KHFanClub",
+  "arguments": ["clang.exe", "-c", "-Qunused-arguments", "-m64", "-g", "-O0", "-Ilib\\flecs\\include", "-DFLECS_DEBUG", "-fexceptions", "-fcxx-exceptions", "-o", "build\\.objs\\flecs\\windows\\x64\\debug\\lib\\flecs\\src\\addons\\expr\\vars.c.obj", "lib\\flecs\\src\\addons\\expr\\vars.c"],
+  "file": "lib\\flecs\\src\\addons\\expr\\vars.c"
+},
+{
+  "directory": "c:\\Users\\dumao\\Desktop\\KHFanClub",
+  "arguments": ["clang.exe", "-c", "-Qunused-arguments", "-m64", "-g", "-O0", "-Ilib\\flecs\\include", "-DFLECS_DEBUG", "-fexceptions", "-fcxx-exceptions", "-o", "build\\.objs\\flecs\\windows\\x64\\debug\\lib\\flecs\\src\\addons\\flecs_cpp.c.obj", "lib\\flecs\\src\\addons\\flecs_cpp.c"],
+  "file": "lib\\flecs\\src\\addons\\flecs_cpp.c"
+},
+{
+  "directory": "c:\\Users\\dumao\\Desktop\\KHFanClub",
+  "arguments": ["clang.exe", "-c", "-Qunused-arguments", "-m64", "-g", "-O0", "-Ilib\\flecs\\include", "-DFLECS_DEBUG", "-fexceptions", "-fcxx-exceptions", "-o", "build\\.objs\\flecs\\windows\\x64\\debug\\lib\\flecs\\src\\addons\\http.c.obj", "lib\\flecs\\src\\addons\\http.c"],
+  "file": "lib\\flecs\\src\\addons\\http.c"
+},
+{
+  "directory": "c:\\Users\\dumao\\Desktop\\KHFanClub",
+  "arguments": ["clang.exe", "-c", "-Qunused-arguments", "-m64", "-g", "-O0", "-Ilib\\flecs\\include", "-DFLECS_DEBUG", "-fexceptions", "-fcxx-exceptions", "-o", "build\\.objs\\flecs\\windows\\x64\\debug\\lib\\flecs\\src\\addons\\journal.c.obj", "lib\\flecs\\src\\addons\\journal.c"],
+  "file": "lib\\flecs\\src\\addons\\journal.c"
+},
+{
+  "directory": "c:\\Users\\dumao\\Desktop\\KHFanClub",
+  "arguments": ["clang.exe", "-c", "-Qunused-arguments", "-m64", "-g", "-O0", "-Ilib\\flecs\\include", "-DFLECS_DEBUG", "-fexceptions", "-fcxx-exceptions", "-o", "build\\.objs\\flecs\\windows\\x64\\debug\\lib\\flecs\\src\\addons\\json\\deserialize.c.obj", "lib\\flecs\\src\\addons\\json\\deserialize.c"],
+  "file": "lib\\flecs\\src\\addons\\json\\deserialize.c"
+},
+{
+  "directory": "c:\\Users\\dumao\\Desktop\\KHFanClub",
+  "arguments": ["clang.exe", "-c", "-Qunused-arguments", "-m64", "-g", "-O0", "-Ilib\\flecs\\include", "-DFLECS_DEBUG", "-fexceptions", "-fcxx-exceptions", "-o", "build\\.objs\\flecs\\windows\\x64\\debug\\lib\\flecs\\src\\addons\\json\\json.c.obj", "lib\\flecs\\src\\addons\\json\\json.c"],
+  "file": "lib\\flecs\\src\\addons\\json\\json.c"
+},
+{
+  "directory": "c:\\Users\\dumao\\Desktop\\KHFanClub",
+  "arguments": ["clang.exe", "-c", "-Qunused-arguments", "-m64", "-g", "-O0", "-Ilib\\flecs\\include", "-DFLECS_DEBUG", "-fexceptions", "-fcxx-exceptions", "-o", "build\\.objs\\flecs\\windows\\x64\\debug\\lib\\flecs\\src\\addons\\json\\serialize.c.obj", "lib\\flecs\\src\\addons\\json\\serialize.c"],
+  "file": "lib\\flecs\\src\\addons\\json\\serialize.c"
+},
+{
+  "directory": "c:\\Users\\dumao\\Desktop\\KHFanClub",
+  "arguments": ["clang.exe", "-c", "-Qunused-arguments", "-m64", "-g", "-O0", "-Ilib\\flecs\\include", "-DFLECS_DEBUG", "-fexceptions", "-fcxx-exceptions", "-o", "build\\.objs\\flecs\\windows\\x64\\debug\\lib\\flecs\\src\\addons\\json\\serialize_type_info.c.obj", "lib\\flecs\\src\\addons\\json\\serialize_type_info.c"],
+  "file": "lib\\flecs\\src\\addons\\json\\serialize_type_info.c"
+},
+{
+  "directory": "c:\\Users\\dumao\\Desktop\\KHFanClub",
+  "arguments": ["clang.exe", "-c", "-Qunused-arguments", "-m64", "-g", "-O0", "-Ilib\\flecs\\include", "-DFLECS_DEBUG", "-fexceptions", "-fcxx-exceptions", "-o", "build\\.objs\\flecs\\windows\\x64\\debug\\lib\\flecs\\src\\addons\\log.c.obj", "lib\\flecs\\src\\addons\\log.c"],
+  "file": "lib\\flecs\\src\\addons\\log.c"
+},
+{
+  "directory": "c:\\Users\\dumao\\Desktop\\KHFanClub",
+  "arguments": ["clang.exe", "-c", "-Qunused-arguments", "-m64", "-g", "-O0", "-Ilib\\flecs\\include", "-DFLECS_DEBUG", "-fexceptions", "-fcxx-exceptions", "-o", "build\\.objs\\flecs\\windows\\x64\\debug\\lib\\flecs\\src\\addons\\meta\\api.c.obj", "lib\\flecs\\src\\addons\\meta\\api.c"],
+  "file": "lib\\flecs\\src\\addons\\meta\\api.c"
+},
+{
+  "directory": "c:\\Users\\dumao\\Desktop\\KHFanClub",
+  "arguments": ["clang.exe", "-c", "-Qunused-arguments", "-m64", "-g", "-O0", "-Ilib\\flecs\\include", "-DFLECS_DEBUG", "-fexceptions", "-fcxx-exceptions", "-o", "build\\.objs\\flecs\\windows\\x64\\debug\\lib\\flecs\\src\\addons\\meta\\cursor.c.obj", "lib\\flecs\\src\\addons\\meta\\cursor.c"],
+  "file": "lib\\flecs\\src\\addons\\meta\\cursor.c"
+},
+{
+  "directory": "c:\\Users\\dumao\\Desktop\\KHFanClub",
+  "arguments": ["clang.exe", "-c", "-Qunused-arguments", "-m64", "-g", "-O0", "-Ilib\\flecs\\include", "-DFLECS_DEBUG", "-fexceptions", "-fcxx-exceptions", "-o", "build\\.objs\\flecs\\windows\\x64\\debug\\lib\\flecs\\src\\addons\\meta\\meta.c.obj", "lib\\flecs\\src\\addons\\meta\\meta.c"],
+  "file": "lib\\flecs\\src\\addons\\meta\\meta.c"
+},
+{
+  "directory": "c:\\Users\\dumao\\Desktop\\KHFanClub",
+  "arguments": ["clang.exe", "-c", "-Qunused-arguments", "-m64", "-g", "-O0", "-Ilib\\flecs\\include", "-DFLECS_DEBUG", "-fexceptions", "-fcxx-exceptions", "-o", "build\\.objs\\flecs\\windows\\x64\\debug\\lib\\flecs\\src\\addons\\meta\\serialized.c.obj", "lib\\flecs\\src\\addons\\meta\\serialized.c"],
+  "file": "lib\\flecs\\src\\addons\\meta\\serialized.c"
+},
+{
+  "directory": "c:\\Users\\dumao\\Desktop\\KHFanClub",
+  "arguments": ["clang.exe", "-c", "-Qunused-arguments", "-m64", "-g", "-O0", "-Ilib\\flecs\\include", "-DFLECS_DEBUG", "-fexceptions", "-fcxx-exceptions", "-o", "build\\.objs\\flecs\\windows\\x64\\debug\\lib\\flecs\\src\\addons\\meta_c.c.obj", "lib\\flecs\\src\\addons\\meta_c.c"],
+  "file": "lib\\flecs\\src\\addons\\meta_c.c"
+},
+{
+  "directory": "c:\\Users\\dumao\\Desktop\\KHFanClub",
+  "arguments": ["clang.exe", "-c", "-Qunused-arguments", "-m64", "-g", "-O0", "-Ilib\\flecs\\include", "-DFLECS_DEBUG", "-fexceptions", "-fcxx-exceptions", "-o", "build\\.objs\\flecs\\windows\\x64\\debug\\lib\\flecs\\src\\addons\\metrics.c.obj", "lib\\flecs\\src\\addons\\metrics.c"],
+  "file": "lib\\flecs\\src\\addons\\metrics.c"
+},
+{
+  "directory": "c:\\Users\\dumao\\Desktop\\KHFanClub",
+  "arguments": ["clang.exe", "-c", "-Qunused-arguments", "-m64", "-g", "-O0", "-Ilib\\flecs\\include", "-DFLECS_DEBUG", "-fexceptions", "-fcxx-exceptions", "-o", "build\\.objs\\flecs\\windows\\x64\\debug\\lib\\flecs\\src\\addons\\module.c.obj", "lib\\flecs\\src\\addons\\module.c"],
+  "file": "lib\\flecs\\src\\addons\\module.c"
+},
+{
+  "directory": "c:\\Users\\dumao\\Desktop\\KHFanClub",
+  "arguments": ["clang.exe", "-c", "-Qunused-arguments", "-m64", "-g", "-O0", "-Ilib\\flecs\\include", "-DFLECS_DEBUG", "-fexceptions", "-fcxx-exceptions", "-o", "build\\.objs\\flecs\\windows\\x64\\debug\\lib\\flecs\\src\\addons\\monitor.c.obj", "lib\\flecs\\src\\addons\\monitor.c"],
+  "file": "lib\\flecs\\src\\addons\\monitor.c"
+},
+{
+  "directory": "c:\\Users\\dumao\\Desktop\\KHFanClub",
+  "arguments": ["clang.exe", "-c", "-Qunused-arguments", "-m64", "-g", "-O0", "-Ilib\\flecs\\include", "-DFLECS_DEBUG", "-fexceptions", "-fcxx-exceptions", "-o", "build\\.objs\\flecs\\windows\\x64\\debug\\lib\\flecs\\src\\addons\\os_api_impl\\os_api_impl.c.obj", "lib\\flecs\\src\\addons\\os_api_impl\\os_api_impl.c"],
+  "file": "lib\\flecs\\src\\addons\\os_api_impl\\os_api_impl.c"
+},
+{
+  "directory": "c:\\Users\\dumao\\Desktop\\KHFanClub",
+  "arguments": ["clang.exe", "-c", "-Qunused-arguments", "-m64", "-g", "-O0", "-Ilib\\flecs\\include", "-DFLECS_DEBUG", "-fexceptions", "-fcxx-exceptions", "-o", "build\\.objs\\flecs\\windows\\x64\\debug\\lib\\flecs\\src\\addons\\parser.c.obj", "lib\\flecs\\src\\addons\\parser.c"],
+  "file": "lib\\flecs\\src\\addons\\parser.c"
+},
+{
+  "directory": "c:\\Users\\dumao\\Desktop\\KHFanClub",
+  "arguments": ["clang.exe", "-c", "-Qunused-arguments", "-m64", "-g", "-O0", "-Ilib\\flecs\\include", "-DFLECS_DEBUG", "-fexceptions", "-fcxx-exceptions", "-o", "build\\.objs\\flecs\\windows\\x64\\debug\\lib\\flecs\\src\\addons\\pipeline\\pipeline.c.obj", "lib\\flecs\\src\\addons\\pipeline\\pipeline.c"],
+  "file": "lib\\flecs\\src\\addons\\pipeline\\pipeline.c"
+},
+{
+  "directory": "c:\\Users\\dumao\\Desktop\\KHFanClub",
+  "arguments": ["clang.exe", "-c", "-Qunused-arguments", "-m64", "-g", "-O0", "-Ilib\\flecs\\include", "-DFLECS_DEBUG", "-fexceptions", "-fcxx-exceptions", "-o", "build\\.objs\\flecs\\windows\\x64\\debug\\lib\\flecs\\src\\addons\\pipeline\\worker.c.obj", "lib\\flecs\\src\\addons\\pipeline\\worker.c"],
+  "file": "lib\\flecs\\src\\addons\\pipeline\\worker.c"
+},
+{
+  "directory": "c:\\Users\\dumao\\Desktop\\KHFanClub",
+  "arguments": ["clang.exe", "-c", "-Qunused-arguments", "-m64", "-g", "-O0", "-Ilib\\flecs\\include", "-DFLECS_DEBUG", "-fexceptions", "-fcxx-exceptions", "-o", "build\\.objs\\flecs\\windows\\x64\\debug\\lib\\flecs\\src\\addons\\plecs.c.obj", "lib\\flecs\\src\\addons\\plecs.c"],
+  "file": "lib\\flecs\\src\\addons\\plecs.c"
+},
+{
+  "directory": "c:\\Users\\dumao\\Desktop\\KHFanClub",
+  "arguments": ["clang.exe", "-c", "-Qunused-arguments", "-m64", "-g", "-O0", "-Ilib\\flecs\\include", "-DFLECS_DEBUG", "-fexceptions", "-fcxx-exceptions", "-o", "build\\.objs\\flecs\\windows\\x64\\debug\\lib\\flecs\\src\\addons\\rest.c.obj", "lib\\flecs\\src\\addons\\rest.c"],
+  "file": "lib\\flecs\\src\\addons\\rest.c"
+},
+{
+  "directory": "c:\\Users\\dumao\\Desktop\\KHFanClub",
+  "arguments": ["clang.exe", "-c", "-Qunused-arguments", "-m64", "-g", "-O0", "-Ilib\\flecs\\include", "-DFLECS_DEBUG", "-fexceptions", "-fcxx-exceptions", "-o", "build\\.objs\\flecs\\windows\\x64\\debug\\lib\\flecs\\src\\addons\\rules\\api.c.obj", "lib\\flecs\\src\\addons\\rules\\api.c"],
+  "file": "lib\\flecs\\src\\addons\\rules\\api.c"
+},
+{
+  "directory": "c:\\Users\\dumao\\Desktop\\KHFanClub",
+  "arguments": ["clang.exe", "-c", "-Qunused-arguments", "-m64", "-g", "-O0", "-Ilib\\flecs\\include", "-DFLECS_DEBUG", "-fexceptions", "-fcxx-exceptions", "-o", "build\\.objs\\flecs\\windows\\x64\\debug\\lib\\flecs\\src\\addons\\rules\\compile.c.obj", "lib\\flecs\\src\\addons\\rules\\compile.c"],
+  "file": "lib\\flecs\\src\\addons\\rules\\compile.c"
+},
+{
+  "directory": "c:\\Users\\dumao\\Desktop\\KHFanClub",
+  "arguments": ["clang.exe", "-c", "-Qunused-arguments", "-m64", "-g", "-O0", "-Ilib\\flecs\\include", "-DFLECS_DEBUG", "-fexceptions", "-fcxx-exceptions", "-o", "build\\.objs\\flecs\\windows\\x64\\debug\\lib\\flecs\\src\\addons\\rules\\engine.c.obj", "lib\\flecs\\src\\addons\\rules\\engine.c"],
+  "file": "lib\\flecs\\src\\addons\\rules\\engine.c"
+},
+{
+  "directory": "c:\\Users\\dumao\\Desktop\\KHFanClub",
+  "arguments": ["clang.exe", "-c", "-Qunused-arguments", "-m64", "-g", "-O0", "-Ilib\\flecs\\include", "-DFLECS_DEBUG", "-fexceptions", "-fcxx-exceptions", "-o", "build\\.objs\\flecs\\windows\\x64\\debug\\lib\\flecs\\src\\addons\\rules\\trav_cache.c.obj", "lib\\flecs\\src\\addons\\rules\\trav_cache.c"],
+  "file": "lib\\flecs\\src\\addons\\rules\\trav_cache.c"
+},
+{
+  "directory": "c:\\Users\\dumao\\Desktop\\KHFanClub",
+  "arguments": ["clang.exe", "-c", "-Qunused-arguments", "-m64", "-g", "-O0", "-Ilib\\flecs\\include", "-DFLECS_DEBUG", "-fexceptions", "-fcxx-exceptions", "-o", "build\\.objs\\flecs\\windows\\x64\\debug\\lib\\flecs\\src\\addons\\rules.c.obj", "lib\\flecs\\src\\addons\\rules.c"],
+  "file": "lib\\flecs\\src\\addons\\rules.c"
+},
+{
+  "directory": "c:\\Users\\dumao\\Desktop\\KHFanClub",
+  "arguments": ["clang.exe", "-c", "-Qunused-arguments", "-m64", "-g", "-O0", "-Ilib\\flecs\\include", "-DFLECS_DEBUG", "-fexceptions", "-fcxx-exceptions", "-o", "build\\.objs\\flecs\\windows\\x64\\debug\\lib\\flecs\\src\\addons\\snapshot.c.obj", "lib\\flecs\\src\\addons\\snapshot.c"],
+  "file": "lib\\flecs\\src\\addons\\snapshot.c"
+},
+{
+  "directory": "c:\\Users\\dumao\\Desktop\\KHFanClub",
+  "arguments": ["clang.exe", "-c", "-Qunused-arguments", "-m64", "-g", "-O0", "-Ilib\\flecs\\include", "-DFLECS_DEBUG", "-fexceptions", "-fcxx-exceptions", "-o", "build\\.objs\\flecs\\windows\\x64\\debug\\lib\\flecs\\src\\addons\\stats.c.obj", "lib\\flecs\\src\\addons\\stats.c"],
+  "file": "lib\\flecs\\src\\addons\\stats.c"
+},
+{
+  "directory": "c:\\Users\\dumao\\Desktop\\KHFanClub",
+  "arguments": ["clang.exe", "-c", "-Qunused-arguments", "-m64", "-g", "-O0", "-Ilib\\flecs\\include", "-DFLECS_DEBUG", "-fexceptions", "-fcxx-exceptions", "-o", "build\\.objs\\flecs\\windows\\x64\\debug\\lib\\flecs\\src\\addons\\system\\system.c.obj", "lib\\flecs\\src\\addons\\system\\system.c"],
+  "file": "lib\\flecs\\src\\addons\\system\\system.c"
+},
+{
+  "directory": "c:\\Users\\dumao\\Desktop\\KHFanClub",
+  "arguments": ["clang.exe", "-c", "-Qunused-arguments", "-m64", "-g", "-O0", "-Ilib\\flecs\\include", "-DFLECS_DEBUG", "-fexceptions", "-fcxx-exceptions", "-o", "build\\.objs\\flecs\\windows\\x64\\debug\\lib\\flecs\\src\\addons\\timer.c.obj", "lib\\flecs\\src\\addons\\timer.c"],
+  "file": "lib\\flecs\\src\\addons\\timer.c"
+},
+{
+  "directory": "c:\\Users\\dumao\\Desktop\\KHFanClub",
+  "arguments": ["clang.exe", "-c", "-Qunused-arguments", "-m64", "-g", "-O0", "-Ilib\\flecs\\include", "-DFLECS_DEBUG", "-fexceptions", "-fcxx-exceptions", "-o", "build\\.objs\\flecs\\windows\\x64\\debug\\lib\\flecs\\src\\addons\\units.c.obj", "lib\\flecs\\src\\addons\\units.c"],
+  "file": "lib\\flecs\\src\\addons\\units.c"
+},
+{
+  "directory": "c:\\Users\\dumao\\Desktop\\KHFanClub",
+  "arguments": ["clang.exe", "-c", "-Qunused-arguments", "-m64", "-g", "-O0", "-Ilib\\flecs\\include", "-DFLECS_DEBUG", "-fexceptions", "-fcxx-exceptions", "-o", "build\\.objs\\flecs\\windows\\x64\\debug\\lib\\flecs\\src\\bootstrap.c.obj", "lib\\flecs\\src\\bootstrap.c"],
+  "file": "lib\\flecs\\src\\bootstrap.c"
+},
+{
+  "directory": "c:\\Users\\dumao\\Desktop\\KHFanClub",
+  "arguments": ["clang.exe", "-c", "-Qunused-arguments", "-m64", "-g", "-O0", "-Ilib\\flecs\\include", "-DFLECS_DEBUG", "-fexceptions", "-fcxx-exceptions", "-o", "build\\.objs\\flecs\\windows\\x64\\debug\\lib\\flecs\\src\\datastructures\\allocator.c.obj", "lib\\flecs\\src\\datastructures\\allocator.c"],
+  "file": "lib\\flecs\\src\\datastructures\\allocator.c"
+},
+{
+  "directory": "c:\\Users\\dumao\\Desktop\\KHFanClub",
+  "arguments": ["clang.exe", "-c", "-Qunused-arguments", "-m64", "-g", "-O0", "-Ilib\\flecs\\include", "-DFLECS_DEBUG", "-fexceptions", "-fcxx-exceptions", "-o", "build\\.objs\\flecs\\windows\\x64\\debug\\lib\\flecs\\src\\datastructures\\bitset.c.obj", "lib\\flecs\\src\\datastructures\\bitset.c"],
+  "file": "lib\\flecs\\src\\datastructures\\bitset.c"
+},
+{
+  "directory": "c:\\Users\\dumao\\Desktop\\KHFanClub",
+  "arguments": ["clang.exe", "-c", "-Qunused-arguments", "-m64", "-g", "-O0", "-Ilib\\flecs\\include", "-DFLECS_DEBUG", "-fexceptions", "-fcxx-exceptions", "-o", "build\\.objs\\flecs\\windows\\x64\\debug\\lib\\flecs\\src\\datastructures\\block_allocator.c.obj", "lib\\flecs\\src\\datastructures\\block_allocator.c"],
+  "file": "lib\\flecs\\src\\datastructures\\block_allocator.c"
+},
+{
+  "directory": "c:\\Users\\dumao\\Desktop\\KHFanClub",
+  "arguments": ["clang.exe", "-c", "-Qunused-arguments", "-m64", "-g", "-O0", "-Ilib\\flecs\\include", "-DFLECS_DEBUG", "-fexceptions", "-fcxx-exceptions", "-o", "build\\.objs\\flecs\\windows\\x64\\debug\\lib\\flecs\\src\\datastructures\\entity_index.c.obj", "lib\\flecs\\src\\datastructures\\entity_index.c"],
+  "file": "lib\\flecs\\src\\datastructures\\entity_index.c"
+},
+{
+  "directory": "c:\\Users\\dumao\\Desktop\\KHFanClub",
+  "arguments": ["clang.exe", "-c", "-Qunused-arguments", "-m64", "-g", "-O0", "-Ilib\\flecs\\include", "-DFLECS_DEBUG", "-fexceptions", "-fcxx-exceptions", "-o", "build\\.objs\\flecs\\windows\\x64\\debug\\lib\\flecs\\src\\datastructures\\hash.c.obj", "lib\\flecs\\src\\datastructures\\hash.c"],
+  "file": "lib\\flecs\\src\\datastructures\\hash.c"
+},
+{
+  "directory": "c:\\Users\\dumao\\Desktop\\KHFanClub",
+  "arguments": ["clang.exe", "-c", "-Qunused-arguments", "-m64", "-g", "-O0", "-Ilib\\flecs\\include", "-DFLECS_DEBUG", "-fexceptions", "-fcxx-exceptions", "-o", "build\\.objs\\flecs\\windows\\x64\\debug\\lib\\flecs\\src\\datastructures\\hashmap.c.obj", "lib\\flecs\\src\\datastructures\\hashmap.c"],
+  "file": "lib\\flecs\\src\\datastructures\\hashmap.c"
+},
+{
+  "directory": "c:\\Users\\dumao\\Desktop\\KHFanClub",
+  "arguments": ["clang.exe", "-c", "-Qunused-arguments", "-m64", "-g", "-O0", "-Ilib\\flecs\\include", "-DFLECS_DEBUG", "-fexceptions", "-fcxx-exceptions", "-o", "build\\.objs\\flecs\\windows\\x64\\debug\\lib\\flecs\\src\\datastructures\\map.c.obj", "lib\\flecs\\src\\datastructures\\map.c"],
+  "file": "lib\\flecs\\src\\datastructures\\map.c"
+},
+{
+  "directory": "c:\\Users\\dumao\\Desktop\\KHFanClub",
+  "arguments": ["clang.exe", "-c", "-Qunused-arguments", "-m64", "-g", "-O0", "-Ilib\\flecs\\include", "-DFLECS_DEBUG", "-fexceptions", "-fcxx-exceptions", "-o", "build\\.objs\\flecs\\windows\\x64\\debug\\lib\\flecs\\src\\datastructures\\name_index.c.obj", "lib\\flecs\\src\\datastructures\\name_index.c"],
+  "file": "lib\\flecs\\src\\datastructures\\name_index.c"
+},
+{
+  "directory": "c:\\Users\\dumao\\Desktop\\KHFanClub",
+  "arguments": ["clang.exe", "-c", "-Qunused-arguments", "-m64", "-g", "-O0", "-Ilib\\flecs\\include", "-DFLECS_DEBUG", "-fexceptions", "-fcxx-exceptions", "-o", "build\\.objs\\flecs\\windows\\x64\\debug\\lib\\flecs\\src\\datastructures\\qsort.c.obj", "lib\\flecs\\src\\datastructures\\qsort.c"],
+  "file": "lib\\flecs\\src\\datastructures\\qsort.c"
+},
+{
+  "directory": "c:\\Users\\dumao\\Desktop\\KHFanClub",
+  "arguments": ["clang.exe", "-c", "-Qunused-arguments", "-m64", "-g", "-O0", "-Ilib\\flecs\\include", "-DFLECS_DEBUG", "-fexceptions", "-fcxx-exceptions", "-o", "build\\.objs\\flecs\\windows\\x64\\debug\\lib\\flecs\\src\\datastructures\\sparse.c.obj", "lib\\flecs\\src\\datastructures\\sparse.c"],
+  "file": "lib\\flecs\\src\\datastructures\\sparse.c"
+},
+{
+  "directory": "c:\\Users\\dumao\\Desktop\\KHFanClub",
+  "arguments": ["clang.exe", "-c", "-Qunused-arguments", "-m64", "-g", "-O0", "-Ilib\\flecs\\include", "-DFLECS_DEBUG", "-fexceptions", "-fcxx-exceptions", "-o", "build\\.objs\\flecs\\windows\\x64\\debug\\lib\\flecs\\src\\datastructures\\stack_allocator.c.obj", "lib\\flecs\\src\\datastructures\\stack_allocator.c"],
+  "file": "lib\\flecs\\src\\datastructures\\stack_allocator.c"
+},
+{
+  "directory": "c:\\Users\\dumao\\Desktop\\KHFanClub",
+  "arguments": ["clang.exe", "-c", "-Qunused-arguments", "-m64", "-g", "-O0", "-Ilib\\flecs\\include", "-DFLECS_DEBUG", "-fexceptions", "-fcxx-exceptions", "-o", "build\\.objs\\flecs\\windows\\x64\\debug\\lib\\flecs\\src\\datastructures\\strbuf.c.obj", "lib\\flecs\\src\\datastructures\\strbuf.c"],
+  "file": "lib\\flecs\\src\\datastructures\\strbuf.c"
+},
+{
+  "directory": "c:\\Users\\dumao\\Desktop\\KHFanClub",
+  "arguments": ["clang.exe", "-c", "-Qunused-arguments", "-m64", "-g", "-O0", "-Ilib\\flecs\\include", "-DFLECS_DEBUG", "-fexceptions", "-fcxx-exceptions", "-o", "build\\.objs\\flecs\\windows\\x64\\debug\\lib\\flecs\\src\\datastructures\\switch_list.c.obj", "lib\\flecs\\src\\datastructures\\switch_list.c"],
+  "file": "lib\\flecs\\src\\datastructures\\switch_list.c"
+},
+{
+  "directory": "c:\\Users\\dumao\\Desktop\\KHFanClub",
+  "arguments": ["clang.exe", "-c", "-Qunused-arguments", "-m64", "-g", "-O0", "-Ilib\\flecs\\include", "-DFLECS_DEBUG", "-fexceptions", "-fcxx-exceptions", "-o", "build\\.objs\\flecs\\windows\\x64\\debug\\lib\\flecs\\src\\datastructures\\vec.c.obj", "lib\\flecs\\src\\datastructures\\vec.c"],
+  "file": "lib\\flecs\\src\\datastructures\\vec.c"
+},
+{
+  "directory": "c:\\Users\\dumao\\Desktop\\KHFanClub",
+  "arguments": ["clang.exe", "-c", "-Qunused-arguments", "-m64", "-g", "-O0", "-Ilib\\flecs\\include", "-DFLECS_DEBUG", "-fexceptions", "-fcxx-exceptions", "-o", "build\\.objs\\flecs\\windows\\x64\\debug\\lib\\flecs\\src\\datastructures\\vector.c.obj", "lib\\flecs\\src\\datastructures\\vector.c"],
+  "file": "lib\\flecs\\src\\datastructures\\vector.c"
+},
+{
+  "directory": "c:\\Users\\dumao\\Desktop\\KHFanClub",
+  "arguments": ["clang.exe", "-c", "-Qunused-arguments", "-m64", "-g", "-O0", "-Ilib\\flecs\\include", "-DFLECS_DEBUG", "-fexceptions", "-fcxx-exceptions", "-o", "build\\.objs\\flecs\\windows\\x64\\debug\\lib\\flecs\\src\\entity.c.obj", "lib\\flecs\\src\\entity.c"],
+  "file": "lib\\flecs\\src\\entity.c"
+},
+{
+  "directory": "c:\\Users\\dumao\\Desktop\\KHFanClub",
+  "arguments": ["clang.exe", "-c", "-Qunused-arguments", "-m64", "-g", "-O0", "-Ilib\\flecs\\include", "-DFLECS_DEBUG", "-fexceptions", "-fcxx-exceptions", "-o", "build\\.objs\\flecs\\windows\\x64\\debug\\lib\\flecs\\src\\entity_filter.c.obj", "lib\\flecs\\src\\entity_filter.c"],
+  "file": "lib\\flecs\\src\\entity_filter.c"
+},
+{
+  "directory": "c:\\Users\\dumao\\Desktop\\KHFanClub",
+  "arguments": ["clang.exe", "-c", "-Qunused-arguments", "-m64", "-g", "-O0", "-Ilib\\flecs\\include", "-DFLECS_DEBUG", "-fexceptions", "-fcxx-exceptions", "-o", "build\\.objs\\flecs\\windows\\x64\\debug\\lib\\flecs\\src\\filter.c.obj", "lib\\flecs\\src\\filter.c"],
+  "file": "lib\\flecs\\src\\filter.c"
+},
+{
+  "directory": "c:\\Users\\dumao\\Desktop\\KHFanClub",
+  "arguments": ["clang.exe", "-c", "-Qunused-arguments", "-m64", "-g", "-O0", "-Ilib\\flecs\\include", "-DFLECS_DEBUG", "-fexceptions", "-fcxx-exceptions", "-o", "build\\.objs\\flecs\\windows\\x64\\debug\\lib\\flecs\\src\\hierarchy.c.obj", "lib\\flecs\\src\\hierarchy.c"],
+  "file": "lib\\flecs\\src\\hierarchy.c"
+},
+{
+  "directory": "c:\\Users\\dumao\\Desktop\\KHFanClub",
+  "arguments": ["clang.exe", "-c", "-Qunused-arguments", "-m64", "-g", "-O0", "-Ilib\\flecs\\include", "-DFLECS_DEBUG", "-fexceptions", "-fcxx-exceptions", "-o", "build\\.objs\\flecs\\windows\\x64\\debug\\lib\\flecs\\src\\id_record.c.obj", "lib\\flecs\\src\\id_record.c"],
+  "file": "lib\\flecs\\src\\id_record.c"
+},
+{
+  "directory": "c:\\Users\\dumao\\Desktop\\KHFanClub",
+  "arguments": ["clang.exe", "-c", "-Qunused-arguments", "-m64", "-g", "-O0", "-Ilib\\flecs\\include", "-DFLECS_DEBUG", "-fexceptions", "-fcxx-exceptions", "-o", "build\\.objs\\flecs\\windows\\x64\\debug\\lib\\flecs\\src\\iter.c.obj", "lib\\flecs\\src\\iter.c"],
+  "file": "lib\\flecs\\src\\iter.c"
+},
+{
+  "directory": "c:\\Users\\dumao\\Desktop\\KHFanClub",
+  "arguments": ["clang.exe", "-c", "-Qunused-arguments", "-m64", "-g", "-O0", "-Ilib\\flecs\\include", "-DFLECS_DEBUG", "-fexceptions", "-fcxx-exceptions", "-o", "build\\.objs\\flecs\\windows\\x64\\debug\\lib\\flecs\\src\\misc.c.obj", "lib\\flecs\\src\\misc.c"],
+  "file": "lib\\flecs\\src\\misc.c"
+},
+{
+  "directory": "c:\\Users\\dumao\\Desktop\\KHFanClub",
+  "arguments": ["clang.exe", "-c", "-Qunused-arguments", "-m64", "-g", "-O0", "-Ilib\\flecs\\include", "-DFLECS_DEBUG", "-fexceptions", "-fcxx-exceptions", "-o", "build\\.objs\\flecs\\windows\\x64\\debug\\lib\\flecs\\src\\observable.c.obj", "lib\\flecs\\src\\observable.c"],
+  "file": "lib\\flecs\\src\\observable.c"
+},
+{
+  "directory": "c:\\Users\\dumao\\Desktop\\KHFanClub",
+  "arguments": ["clang.exe", "-c", "-Qunused-arguments", "-m64", "-g", "-O0", "-Ilib\\flecs\\include", "-DFLECS_DEBUG", "-fexceptions", "-fcxx-exceptions", "-o", "build\\.objs\\flecs\\windows\\x64\\debug\\lib\\flecs\\src\\observer.c.obj", "lib\\flecs\\src\\observer.c"],
+  "file": "lib\\flecs\\src\\observer.c"
+},
+{
+  "directory": "c:\\Users\\dumao\\Desktop\\KHFanClub",
+  "arguments": ["clang.exe", "-c", "-Qunused-arguments", "-m64", "-g", "-O0", "-Ilib\\flecs\\include", "-DFLECS_DEBUG", "-fexceptions", "-fcxx-exceptions", "-o", "build\\.objs\\flecs\\windows\\x64\\debug\\lib\\flecs\\src\\os_api.c.obj", "lib\\flecs\\src\\os_api.c"],
+  "file": "lib\\flecs\\src\\os_api.c"
+},
+{
+  "directory": "c:\\Users\\dumao\\Desktop\\KHFanClub",
+  "arguments": ["clang.exe", "-c", "-Qunused-arguments", "-m64", "-g", "-O0", "-Ilib\\flecs\\include", "-DFLECS_DEBUG", "-fexceptions", "-fcxx-exceptions", "-o", "build\\.objs\\flecs\\windows\\x64\\debug\\lib\\flecs\\src\\poly.c.obj", "lib\\flecs\\src\\poly.c"],
+  "file": "lib\\flecs\\src\\poly.c"
+},
+{
+  "directory": "c:\\Users\\dumao\\Desktop\\KHFanClub",
+  "arguments": ["clang.exe", "-c", "-Qunused-arguments", "-m64", "-g", "-O0", "-Ilib\\flecs\\include", "-DFLECS_DEBUG", "-fexceptions", "-fcxx-exceptions", "-o", "build\\.objs\\flecs\\windows\\x64\\debug\\lib\\flecs\\src\\query.c.obj", "lib\\flecs\\src\\query.c"],
+  "file": "lib\\flecs\\src\\query.c"
+},
+{
+  "directory": "c:\\Users\\dumao\\Desktop\\KHFanClub",
+  "arguments": ["clang.exe", "-c", "-Qunused-arguments", "-m64", "-g", "-O0", "-Ilib\\flecs\\include", "-DFLECS_DEBUG", "-fexceptions", "-fcxx-exceptions", "-o", "build\\.objs\\flecs\\windows\\x64\\debug\\lib\\flecs\\src\\search.c.obj", "lib\\flecs\\src\\search.c"],
+  "file": "lib\\flecs\\src\\search.c"
+},
+{
+  "directory": "c:\\Users\\dumao\\Desktop\\KHFanClub",
+  "arguments": ["clang.exe", "-c", "-Qunused-arguments", "-m64", "-g", "-O0", "-Ilib\\flecs\\include", "-DFLECS_DEBUG", "-fexceptions", "-fcxx-exceptions", "-o", "build\\.objs\\flecs\\windows\\x64\\debug\\lib\\flecs\\src\\stage.c.obj", "lib\\flecs\\src\\stage.c"],
+  "file": "lib\\flecs\\src\\stage.c"
+},
+{
+  "directory": "c:\\Users\\dumao\\Desktop\\KHFanClub",
+  "arguments": ["clang.exe", "-c", "-Qunused-arguments", "-m64", "-g", "-O0", "-Ilib\\flecs\\include", "-DFLECS_DEBUG", "-fexceptions", "-fcxx-exceptions", "-o", "build\\.objs\\flecs\\windows\\x64\\debug\\lib\\flecs\\src\\table.c.obj", "lib\\flecs\\src\\table.c"],
+  "file": "lib\\flecs\\src\\table.c"
+},
+{
+  "directory": "c:\\Users\\dumao\\Desktop\\KHFanClub",
+  "arguments": ["clang.exe", "-c", "-Qunused-arguments", "-m64", "-g", "-O0", "-Ilib\\flecs\\include", "-DFLECS_DEBUG", "-fexceptions", "-fcxx-exceptions", "-o", "build\\.objs\\flecs\\windows\\x64\\debug\\lib\\flecs\\src\\table_cache.c.obj", "lib\\flecs\\src\\table_cache.c"],
+  "file": "lib\\flecs\\src\\table_cache.c"
+},
+{
+  "directory": "c:\\Users\\dumao\\Desktop\\KHFanClub",
+  "arguments": ["clang.exe", "-c", "-Qunused-arguments", "-m64", "-g", "-O0", "-Ilib\\flecs\\include", "-DFLECS_DEBUG", "-fexceptions", "-fcxx-exceptions", "-o", "build\\.objs\\flecs\\windows\\x64\\debug\\lib\\flecs\\src\\table_graph.c.obj", "lib\\flecs\\src\\table_graph.c"],
+  "file": "lib\\flecs\\src\\table_graph.c"
+},
+{
+  "directory": "c:\\Users\\dumao\\Desktop\\KHFanClub",
+  "arguments": ["clang.exe", "-c", "-Qunused-arguments", "-m64", "-g", "-O0", "-Ilib\\flecs\\include", "-DFLECS_DEBUG", "-fexceptions", "-fcxx-exceptions", "-o", "build\\.objs\\flecs\\windows\\x64\\debug\\lib\\flecs\\src\\value.c.obj", "lib\\flecs\\src\\value.c"],
+  "file": "lib\\flecs\\src\\value.c"
+},
+{
+  "directory": "c:\\Users\\dumao\\Desktop\\KHFanClub",
+  "arguments": ["clang.exe", "-c", "-Qunused-arguments", "-m64", "-g", "-O0", "-Ilib\\flecs\\include", "-DFLECS_DEBUG", "-fexceptions", "-fcxx-exceptions", "-o", "build\\.objs\\flecs\\windows\\x64\\debug\\lib\\flecs\\src\\world.c.obj", "lib\\flecs\\src\\world.c"],
+  "file": "lib\\flecs\\src\\world.c"
+}]

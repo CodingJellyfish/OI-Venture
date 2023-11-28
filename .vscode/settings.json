@@ -1,0 +1,14 @@
+{
+    "files.associations": {
+        "vector_types.h": "c",
+        "flecs.h": "c",
+        "test.h": "c",
+        "__bit_reference": "c",
+        "bitset": "c",
+        "unordered_map": "c",
+        "sokol_gfx.h": "c",
+        "render_target.h": "c",
+        "render_context.h": "c",
+        "stdbool.h": "c"
+    }
+}
